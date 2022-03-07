@@ -3,6 +3,8 @@ import { Menu } from "@headlessui/react"
 import { FaWalking, FaBookmark } from "react-icons/fa"
 import { RiQrCodeLine } from "react-icons/ri"
 import { useRouter } from "next/router"
+import { signOut } from "firebase/auth"
+import { auth } from "../../services/firebase-provider"
 
 const Header = () => {
   const router = useRouter()
@@ -35,6 +37,10 @@ const Header = () => {
             My Code
           </Menu.Item>
           <Menu.Item
+            onClick={() => {
+              signOut(auth)
+              router.push("/")
+            }}
             className="flex items-center justify-start py-2 hover:bg-blue-500 hover:text-slate-200 rounded-md px-2"
             as="div"
           >

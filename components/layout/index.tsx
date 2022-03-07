@@ -12,7 +12,7 @@ const Layout: React.FC = ({ children }) => {
         ></meta>
       </Head>
       <Header />
-      <div className="flex h-full w-full justify-center overflow-y-scroll border-inherit px-6 pt-12 items-center">
+      <div className="flex h-full w-full justify-center border-inherit px-6 pt-12 items-center">
         {children}
       </div>
     </div>

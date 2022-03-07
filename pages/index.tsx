@@ -2,8 +2,12 @@ import type { NextPage } from "next"
 import Layout from "../components/layout"
 import MiddleButton from "../components/middle-button/middle-button"
 import { RiQrCodeLine } from "react-icons/ri"
+import { useContext } from "react"
+import { UserContext } from "../services/firebase-provider"
 
 const Home: NextPage = () => {
+  const user = useContext(UserContext)
+
   return (
     <Layout>
       <div className="">
@@ -11,7 +15,7 @@ const Home: NextPage = () => {
           Welcome to <span className="ml-1 text-blue-500">QR</span>RÖszTI!
         </p>
       </div>
-      <MiddleButton href="qr" icon={<RiQrCodeLine />} />
+      <MiddleButton href={`qr?userid=${user?.uid}`} icon={<RiQrCodeLine />} />
     </Layout>
   )
 }
