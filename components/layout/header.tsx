@@ -2,12 +2,18 @@ import React from "react"
 import { Menu } from "@headlessui/react"
 import { FaWalking, FaBookmark } from "react-icons/fa"
 import { RiQrCodeLine } from "react-icons/ri"
+import { useRouter } from "next/router"
 
 const Header = () => {
+  const router = useRouter()
+
   return (
     <div className="fixed inset-x-0 top-0 w-full h-12 flex items-center px-6 justify-between">
-      <div className="font-semibold">
-        <span className="text-blue-500 mr-0">QR</span>RÖszTI
+      <div
+        onClick={() => router.push("/")}
+        className="font-semibold cursor-pointer"
+      >
+        <span className="text-blue-500">QR</span>RÖszTI
       </div>
       <Menu as="div" className="relative">
         <Menu.Button className="text-sm outline-none font-medium">
