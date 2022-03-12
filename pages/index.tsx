@@ -6,8 +6,6 @@ import { useContext } from "react"
 import { UserContext } from "../services/firebase-provider"
 
 const Home: NextPage = () => {
-  const user = useContext(UserContext)
-
   return (
     <Layout>
       <div className="">
