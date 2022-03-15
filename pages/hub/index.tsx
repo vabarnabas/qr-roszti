@@ -10,7 +10,12 @@ const HubView = () => {
         <p className="first-letter:pl-3 w-full font-semibold text-2xl">
           Upcoming Events
         </p>
-        <EventCard />
+        <div className="gap-4 mt-4 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <EventCard />
+          <EventCard />
+          <EventCard />
+          <EventCard />
+        </div>
       </div>
     </Layout>
   )
