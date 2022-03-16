@@ -15,9 +15,9 @@ const Header = () => {
     <div className="fixed inset-x-0 top-0 w-full h-12 flex items-center px-6 justify-between">
       <div
         onClick={() => router.push("/")}
-        className="font-semibold cursor-pointer"
+        className="font-semibold cursor-pointer text-blue-500"
       >
-        <span className="text-blue-500">QR</span>RÖszTI
+        <span className="text-white">RÖszTI</span>Suite
       </div>
       {user ? (
         <Menu as="div" className="relative">
