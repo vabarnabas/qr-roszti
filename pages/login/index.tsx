@@ -16,25 +16,28 @@ const LoginView = () => {
     e.preventDefault()
     try {
       await signInWithEmailAndPassword(auth, email, password)
+      await router.push("/")
     } catch (error: any) {
-      ;(() => {
-        switch (error.code) {
-          case "auth/invalid-email":
-            return setError("Hibás vagy ismeretlen e-mail cím!")
-          case "auth/internal-error":
-            return setError("Hibás vagy hiányzó adatok!")
-          case "auth/wrong-password":
-            return setError("Hibás jelszó!")
-          case "auth/too-many-requests":
-            return setError("Túl sok próbálkozás")
-          case "auth/user-not-found":
-            return setError("Ismeretlen felhasználó!")
-          default:
-            return setError("")
-        }
-      })()
-    } finally {
-      router.push("/")
+      switch (error.code) {
+        case "auth/invalid-email":
+          setError("Hibás vagy ismeretlen e-mail cím!")
+          break
+        case "auth/internal-error":
+          setError("Hibás vagy hiányzó adatok!")
+          break
+        case "auth/wrong-password":
+          setError("Hibás jelszó!")
+          break
+        case "auth/too-many-requests":
+          setError("Túl sok próbálkozás")
+          break
+        case "auth/user-not-found":
+          setError("Ismeretlen felhasználó!")
+          break
+        default:
+          setError("")
+          break
+      }
     }
   }
 

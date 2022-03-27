@@ -6,8 +6,6 @@ import { useContext } from "react"
 import { UserContext } from "../services/firebase-provider"
 
 const Home: NextPage = () => {
-  const user = useContext(UserContext)
-
   return (
     <Layout>
       <div className="">
@@ -15,7 +13,7 @@ const Home: NextPage = () => {
           Welcome to <span className="ml-1 text-blue-500">QR</span>RÖszTI!
         </p>
       </div>
-      <MiddleButton href={`qr?userid=${user?.uid}`} icon={<RiQrCodeLine />} />
+      <MiddleButton href={"/qr"} icon={<RiQrCodeLine />} />
     </Layout>
   )
 }
