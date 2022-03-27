@@ -7,6 +7,7 @@ import {
   FaUserTag,
   FaUserFriends,
   FaPaperPlane,
+  FaAddressBook,
 } from "react-icons/fa"
 import { AiFillTag, AiFillCloud } from "react-icons/ai"
 import {
@@ -47,24 +48,24 @@ export const useMenuOptions = () => {
       group: "Main",
     },
     {
-      title: "Upcoming Events",
-      icon: <IoCalendarClear />,
-      group: "Events",
-    },
-    {
-      title: "Events List",
-      icon: <IoMdListBox className="text-base" />,
-      group: "Events",
-    },
-    {
       title: "openRÖszTI",
-      icon: <IoGrid />,
+      icon: <FaAddressBook />,
       group: "My RÖszTI",
     },
     {
       title: "QR Code",
       icon: <RiQrCodeLine className="text-base" />,
       group: "My RÖszTI",
+    },
+    {
+      title: "Upcoming Events",
+      icon: <IoCalendarClear />,
+      group: "Events",
+    },
+    {
+      title: "Event List",
+      icon: <IoMdListBox className="text-base" />,
+      group: "Events",
     },
     {
       title: "Central Portal",

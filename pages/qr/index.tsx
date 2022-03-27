@@ -11,15 +11,15 @@ const QRView = () => {
 
   return (
     <Layout>
-      {/* <QRCode
+      <QRCode
         className="rounded-lg"
-        value={user?.uid || "" + date}
+        value={(user?.uid || "") + "_" + date}
         bgColor="#e2e8f0"
         fgColor="#1e293b"
         includeMargin={true}
         size={312}
-      /> */}
-      <div className="relative aspect-square rounded-lg overflow-hidden">
+      />
+      {/* <div className="relative aspect-square rounded-lg overflow-hidden">
         <Image
           src={`https://chart.googleapis.com/chart?cht=qr&chs=200x200&chl=${
             user?.uid || ""
@@ -27,7 +27,7 @@ const QRView = () => {
           width={312}
           height={312}
         />
-      </div>
+      </div> */}
     </Layout>
   )
 }

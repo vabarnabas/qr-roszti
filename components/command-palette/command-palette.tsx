@@ -37,7 +37,7 @@ const CommandPalette: React.FC = () => {
             (object) => object.title === item
           )[0]
           console.log(selectedOption)
-          selectedOption?.action && selectedOption?.action()
+          selectedOption?.action && selectedOption.action()
           setQuery("")
           setIsOpen(false)
         }}
@@ -64,10 +64,10 @@ const CommandPalette: React.FC = () => {
                   (object.title
                     .toLowerCase()
                     .includes(query.toLocaleLowerCase()) ||
-                    (object.group
+                    object.group
                       .toLocaleLowerCase()
                       .includes(query.toLocaleLowerCase())) &&
-                  object.group !== "Main")
+                  object.group !== "Main"
               )
               .map((option) => (
                 <Combobox.Option
