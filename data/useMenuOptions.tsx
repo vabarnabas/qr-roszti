@@ -18,6 +18,7 @@ import {
   IoInvertModeSharp,
   IoCubeSharp,
   IoCalendarClear,
+  IoEarthSharp,
 } from "react-icons/io5"
 import { IoMdListBox, IoMdSettings } from "react-icons/io"
 import { MdCardGiftcard, MdSignalWifiStatusbar3Bar } from "react-icons/md"
@@ -69,9 +70,10 @@ export const useMenuOptions = () => {
     },
     {
       title: "Central Portal",
-      icon: <IoGrid />,
+      icon: <IoEarthSharp />,
       group: "Main",
       individual: true,
+      action: () => window.open("https://estiem.org/", "_blank"),
     },
     {
       title: "Account",
