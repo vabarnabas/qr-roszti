@@ -1,29 +1,9 @@
 import React from "react"
-import { HiFolder, HiLink } from "react-icons/hi"
-import { MdOutlineDriveFolderUpload } from "react-icons/md"
-import {
-  FaShoppingBasket,
-  FaUser,
-  FaUserTag,
-  FaUserFriends,
-  FaPaperPlane,
-  FaAddressBook,
-} from "react-icons/fa"
-import { AiFillTag, AiFillCloud } from "react-icons/ai"
-import {
-  IoShareSocialSharp,
-  IoLanguageSharp,
-  IoAnalyticsSharp,
-  IoGrid,
-  IoInvertModeSharp,
-  IoCubeSharp,
-  IoCalendarClear,
-  IoEarthSharp,
-} from "react-icons/io5"
+import { FaPaperPlane, FaAddressBook } from "react-icons/fa"
+import { IoGrid, IoCalendarClear, IoEarthSharp } from "react-icons/io5"
 import { IoMdListBox, IoMdSettings } from "react-icons/io"
-import { MdCardGiftcard, MdSignalWifiStatusbar3Bar } from "react-icons/md"
+import { MdCardGiftcard } from "react-icons/md"
 import { RiQrCodeLine, RiWalkFill, RiAccountBoxFill } from "react-icons/ri"
-import { BsFillPersonBadgeFill } from "react-icons/bs"
 import { useRouter } from "next/router"
 
 export interface MenuOptions {

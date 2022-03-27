@@ -53,26 +53,22 @@ const CommandPalette: React.FC = () => {
         >
           {menuOptions.filter(
             (object) =>
-              ((object.title
-                .toLowerCase()
-                .includes(query.toLocaleLowerCase()) ||
+              (object.group !== "Main" || object?.individual) &&
+              (object.title.toLowerCase().includes(query.toLocaleLowerCase()) ||
                 object.group
                   .toLocaleLowerCase()
-                  .includes(query.toLocaleLowerCase())) &&
-                object.group !== "Main") ||
-              object?.individual
+                  .includes(query.toLocaleLowerCase()))
           ).length > 0 ? (
             menuOptions
               .filter(
                 (object) =>
-                  ((object.title
+                  (object.group !== "Main" || object?.individual) &&
+                  (object.title
                     .toLowerCase()
                     .includes(query.toLocaleLowerCase()) ||
                     object.group
                       .toLocaleLowerCase()
-                      .includes(query.toLocaleLowerCase())) &&
-                    object.group !== "Main") ||
-                  object?.individual
+                      .includes(query.toLocaleLowerCase()))
               )
               .map((option) => (
                 <Combobox.Option
@@ -83,16 +79,12 @@ const CommandPalette: React.FC = () => {
                   {({ active }) => (
                     <div
                       className={`flex w-full cursor-pointer items-center rounded-md px-2 py-2 text-sm ${
-                        active ? "bg-blue-500 text-slate-50" : ""
+                        active ? "bg-soft-green text-slate-50" : ""
                       }`}
                     >
                       <div className="mr-3 text-sm">{option.icon}</div>
                       <p className="">{option.title}</p>
-                      <p
-                        className={`ml-1 ${
-                          active ? "text-slate-200" : "text-slate-400"
-                        }`}
-                      >
+                      <p className={`ml-1 ${active ? "text-slate-200" : ""}`}>
                         {" in " + option.group}
                       </p>
                     </div>

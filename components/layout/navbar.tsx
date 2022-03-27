@@ -29,11 +29,11 @@ const Navbar = () => {
             : "rounded-md"
         }`}
       >
-        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-500 text-xs text-white">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-soft-green text-xs text-white">
           VB
         </div>
         <div className="ml-4 flex flex-col items-stretch">
-          <p className="text-sm font-bold text-blue-500">RÖszTI Suite</p>
+          <p className="text-sm font-bold text-soft-green">RÖszTI Suite</p>
           <p className="text-xs">Varga Barnabás</p>
         </div>
         {openGroups.includes("Profile") ? (
@@ -48,8 +48,9 @@ const Navbar = () => {
             .filter((object) => object.group === "Profile")
             .map((item) => (
               <div
+                onClick={() => item?.action && item?.action()}
                 key={item.title}
-                className="flex items-center rounded-md py-2 px-2 hover:bg-blue-500 hover:text-slate-50"
+                className="flex items-center rounded-md py-2 px-2 hover:bg-soft-green hover:text-slate-50"
               >
                 <div className="mr-3 text-sm">{item.icon}</div>
                 <p className="text-xs">{item.title}</p>
@@ -61,7 +62,11 @@ const Navbar = () => {
         {menuOptions
           .filter((object) => object.group === "Main")
           .map((item) => (
-            <div key={item.title} className="w-full">
+            <div
+              onClick={() => item?.action && item?.individual && item?.action()}
+              key={item.title}
+              className="w-full"
+            >
               <div
                 className="flex cursor-pointer items-center rounded-md py-2.5 px-3 hover:bg-slate-200"
                 onClick={() => onGroupToggle(item.title)}
@@ -80,6 +85,7 @@ const Navbar = () => {
                   .filter((object) => object.group === item.title)
                   .map((subItem) => (
                     <div
+                      onClick={() => subItem?.action && subItem?.action()}
                       key={subItem.title}
                       className="mt-1 ml-4 mr-2 flex cursor-pointer items-center rounded-md py-1.5 px-2 hover:bg-slate-200"
                     >
