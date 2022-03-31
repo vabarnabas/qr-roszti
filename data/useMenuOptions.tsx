@@ -32,6 +32,7 @@ export const useMenuOptions = () => {
       title: "openRÖszTI",
       icon: <FaAddressBook />,
       group: "My RÖszTI",
+      action: () => router.push("/openroszti"),
     },
     {
       title: "QR Code",
