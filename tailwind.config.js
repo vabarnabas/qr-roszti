@@ -10,6 +10,7 @@ module.exports = {
         "medium-gray": "#222222",
         "light-gray": "#333333",
         "soft-green": "#00b581",
+        "darker-soft-green": "#16a378",
         "soft-yellow": "#fccc04"
       },
     },
