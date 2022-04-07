@@ -16,7 +16,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className=" h-full w-72 overflow-y-auto bg-gray-50 px-4 pt-6 pb-12 text-inherit scrollbar-hide">
+    <div className="hidden md:block h-full w-72 overflow-y-auto bg-gray-50 px-4 pt-6 pb-12 text-inherit scrollbar-hide">
       <CommandPalette />
       <div className="fixed bottom-0 left-0 flex h-10 w-72 items-center bg-soft-gray px-4 bg-inherit">
         <HiTerminal className="cursor-pointer" />

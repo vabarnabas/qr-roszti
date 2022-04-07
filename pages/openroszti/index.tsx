@@ -18,7 +18,7 @@ const OpenROszTI = () => {
     "roszti-data",
     async () => {
       const res = await fetch(
-        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/pvep31?range=2021-2022%20tavasz%20events`
+        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/${queryCode}?range=2021-2022%20tavasz%20events`
       )
       return res.json()
     },
@@ -61,8 +61,8 @@ const OpenROszTI = () => {
           </form>
         )}
         {ROszTIData && (
-          <div className="w-full grid grid-cols-2 mb-3 gap-x-4">
-            <div className="hidden md:grid w-full grid-flow-col gap-x-8 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
+          <div className="w-full grid lg:grid-cols-2 mb-3 gap-x-4 gap-y-2">
+            <div className="hidden sm:grid w-full grid-flow-col gap-x-8 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
               <div className="flex items-center justify-center flex-col">
                 <p className="font-bold">
                   {ROszTIData[ROszTIData.length - 2].point}
@@ -70,7 +70,7 @@ const OpenROszTI = () => {
                 <p className="mr-2 text-sm">Elért Pontszám</p>
               </div>
               {parseInt(ROszTIData[ROszTIData.length - 2].point) < 6 && (
-                <p className="text-xs mt-2">
+                <p className="text-xs">
                   Még
                   <span className="mx-1 text-soft-green font-semibold">
                     {6 - parseInt(ROszTIData[ROszTIData.length - 2].point)}
@@ -82,23 +82,27 @@ const OpenROszTI = () => {
                 </p>
               )}
             </div>
-            <div className="grid grid-rows-2 gap-y-2">
+            <div className="grid grid-cols-1 gap-y-2">
+              <div className="sm:hidden w-full flex flex-col items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
+                <p className="">{ROszTIData[ROszTIData.length - 2].point}</p>
+                <p className="text-sm">Elért Pontszám</p>
+              </div>
               <div className="w-full flex flex-col items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
                 <p className="">{ROszTIData[ROszTIData.length - 1].point}</p>
-                <p className="mr-2 text-sm">Elért Pontszám</p>
+                <p className="text-sm">Szavazati Jog</p>
               </div>
               <div className="w-full flex flex-col items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
                 <p className="font-bold">
                   {ROszTIData[ROszTIData.length - 3].point}
                 </p>
-                <p className="mr-2 text-sm">Státusz</p>
+                <p className="text-sm">Státusz</p>
               </div>
             </div>
           </div>
         )}
         {ROszTIData && <p className="mb-1 text-sm">Események</p>}
         {ROszTIData && (
-          <div className="w-full grid-cols-2 grid gap-x-4 gap-y-2">
+          <div className="w-full grid-cols-1 lg:grid-cols-2 grid gap-x-4 gap-y-2">
             {ROszTIData.slice(0, ROszTIData.length - 3).map(
               (item: ROszTIDataType) => (
                 <div
