@@ -42,7 +42,9 @@ const OpenROszTI = () => {
               }}
               className="w-full"
             >
-              <p className="text-xl font-bold mb-6">openRÖszTI</p>
+              <p className="text-xl font-bold mb-6">
+                openRÖszTI<span className="text-soft-green text-sm">v6.5</span>
+              </p>
               <div className="relative flex items-center">
                 <VscSymbolString className="absolute left-2" />
                 <input

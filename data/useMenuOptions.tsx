@@ -1,6 +1,11 @@
 import React from "react"
 import { FaPaperPlane, FaAddressBook } from "react-icons/fa"
-import { IoGrid, IoCalendarClear, IoEarthSharp } from "react-icons/io5"
+import {
+  IoGrid,
+  IoCalendarClear,
+  IoEarthSharp,
+  IoHammer,
+} from "react-icons/io5"
 import { IoMdListBox, IoMdSettings } from "react-icons/io"
 import { MdCardGiftcard } from "react-icons/md"
 import { RiQrCodeLine, RiWalkFill, RiAccountBoxFill } from "react-icons/ri"
@@ -48,6 +53,21 @@ export const useMenuOptions = () => {
       title: "Event List",
       icon: <IoMdListBox className="text-base" />,
       group: "Events",
+    },
+    {
+      title: "Tools",
+      icon: <IoHammer />,
+      group: "Main",
+    },
+    {
+      title: "Code Generator",
+      icon: <IoHammer />,
+      group: "Tools",
+    },
+    {
+      title: "Event Manager",
+      icon: <IoHammer />,
+      group: "Tools",
     },
     {
       title: "Central Portal",
