@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useState } from "react"
 import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
@@ -8,6 +8,14 @@ const Navbar = () => {
   const [openGroups, setOpenGroups] = useState<string[]>([])
 
   const { menuOptions } = useMenuOptions()
+
+  useEffect(() => {
+    setOpenGroups(JSON.parse(localStorage.getItem("openGroups") || "[]"))
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem("openGroups", JSON.stringify(openGroups))
+  }, [openGroups])
 
   const onGroupToggle = (item: string) => {
     !openGroups.includes(item)
