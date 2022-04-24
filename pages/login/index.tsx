@@ -42,41 +42,35 @@ const LoginView = () => {
   }
 
   return (
-    <div className="select-none w-screen h-screen bg-slate-50 dark:bg-medium-gray text-slate-600 dark:text-slate-200 flex justify-center border-inherit px-6 items-center">
-      <form
-        onSubmit={(e) => onFromSubmit(e)}
-        action=""
-        className="p-6 border dark:border-zinc-600 rounded-lg"
-      >
+    <div className="select-none w-screen h-screen bg-white text-slate-500 flex justify-center border-inherit px-6 items-center">
+      <form onSubmit={(e) => onFromSubmit(e)} action="" className="w-72">
         <p className="mb-5 font-semibold text-2xl">Login</p>
         <div className="flex-col flex">
-          <p className="mb-1 pl-1 text-xs font-light">E-mail</p>
           <div className="relative flex items-center justify-center">
-            <BsFillEnvelopeFill className="absolute left-2 text-slate-500 dark:text-slate-200" />
+            <BsFillEnvelopeFill className="absolute left-2 text-slate-500" />
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              placeholder="E-mail address"
               type="email"
-              className="form-input"
+              className="form-input-field"
             />
           </div>
           {error && <p className="text-xs mt-1 -mb-2 text-pink-500">{error}</p>}
         </div>
-        <div className="mt-4 flex-col flex">
-          <p className="mb-1 pl-1 text-xs font-light">Password</p>
-          <div className="relative flex items-center justify-center">
-            <MdPassword className="absolute left-2 text-slate-500 dark:text-slate-200" />
-            <input
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              type="password"
-              className="form-input"
-            />
-          </div>
+        <div className="mt-4 relative flex items-center justify-center">
+          <MdPassword className="absolute left-2 text-slate-500 " />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            placeholder="Password"
+            type="password"
+            className="form-input-field"
+          />
         </div>
-        <button className="bg-blue-500 hover:bg-blue-600 w-full rounded mt-4 text-sm outline-none py-1">
+        <button className="bg-soft-green hover:bg-darker-soft-green text-white w-full rounded-md mt-4 text-sm outline-none py-1">
           Login
         </button>
       </form>

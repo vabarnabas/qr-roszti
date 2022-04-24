@@ -1,4 +1,6 @@
-import React, { useState } from "react"
+import { stat } from "fs"
+import { useRouter } from "next/router"
+import React, { useEffect, useState } from "react"
 import { VscSymbolString } from "react-icons/vsc"
 import { useQuery, useQueryClient } from "react-query"
 import Layout from "../../components/layout"
@@ -11,6 +13,9 @@ interface ROszTIDataType {
 
 const OpenROszTI = () => {
   const [queryCode, setQueryCode] = useState("")
+  const router = useRouter()
+  const { q: code } = router.query
+
   const {
     data: ROszTIData,
     status,
@@ -27,6 +32,23 @@ const OpenROszTI = () => {
       enabled: false,
     }
   )
+
+  useEffect(() => {
+    const fetchIfCode = async () => {
+      if (router.isReady && code) {
+        await setQueryCode(Array.isArray(code) ? code[0] : code)
+        await refetch()
+      }
+    }
+
+    fetchIfCode()
+  }, [router.isReady])
+
+  useEffect(() => {
+    if (ROszTIData?.message) {
+      router.reload()
+    }
+  }, [ROszTIData])
 
   return (
     <Layout>
@@ -50,11 +72,12 @@ const OpenROszTI = () => {
                 <input
                   type="text"
                   value={queryCode}
+                  required
                   onChange={(e) =>
                     setQueryCode(e.target.value.toLocaleUpperCase().slice(0, 6))
                   }
                   placeholder="RÖszTI Code"
-                  className="bg-gray-50 rounded-md pl-8 pr-4 py-1.5 outline-none text-sm w-full"
+                  className="form-input-field"
                 />
               </div>
               <p className="text-xs inline-block mt-1">
@@ -66,20 +89,20 @@ const OpenROszTI = () => {
               </button>
             </form>
           )}
-          {ROszTIData && (
+          {ROszTIData && !ROszTIData?.message && (
             <div className="w-full grid lg:grid-cols-2 mb-3 gap-x-4 gap-y-2">
               <div className="grid w-full grid-flow-col gap-x-6 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
                 <div className="flex items-center justify-center flex-col">
                   <p className="font-bold">
-                    {ROszTIData[ROszTIData.length - 2].point}
+                    {ROszTIData[ROszTIData.length - 2]?.point}
                   </p>
                   <p className="text-sm text-center">Elért Pontszám</p>
                 </div>
-                {parseInt(ROszTIData[ROszTIData.length - 2].point) < 6 ? (
+                {parseInt(ROszTIData[ROszTIData.length - 2]?.point) < 6 ? (
                   <p className="text-xs">
                     Még
                     <span className="mx-1 text-soft-green font-semibold">
-                      {6 - parseInt(ROszTIData[ROszTIData.length - 2].point)}
+                      {6 - parseInt(ROszTIData[ROszTIData.length - 2]?.point)}
                     </span>
                     pontot kell elérned az aktív tagsághoz.
                     <span className="text-soft-green hover:underline cursor-pointer">
@@ -96,13 +119,13 @@ const OpenROszTI = () => {
               <div className="grid w-full grid-flow-col gap-x-6 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
                 <div className="flex items-center justify-center flex-col">
                   <p className="font-bold">
-                    {ROszTIData[ROszTIData.length - 1].point}
+                    {ROszTIData[ROszTIData.length - 1]?.point}
                   </p>
                   <p className="mr-2 text-sm text-center">Szavazati Jog</p>
                 </div>
                 <p className="">
                   {" "}
-                  {ROszTIData[ROszTIData.length - 3].point !== "Not Active" ? (
+                  {ROszTIData[ROszTIData.length - 3]?.point === "Not Active" ? (
                     <p className="text-xs">
                       Sajnos jelenleg ebben a félévben, még{" "}
                       <span className="text-soft-green">nem</span> érted el, az
@@ -119,8 +142,10 @@ const OpenROszTI = () => {
               </div>
             </div>
           )}
-          {ROszTIData && <p className="mb-1 mt-3 text-sm">Események</p>}
-          {ROszTIData && (
+          {ROszTIData && !ROszTIData?.message && (
+            <p className="mb-1 mt-3 text-sm">Események</p>
+          )}
+          {ROszTIData && !ROszTIData?.message && (
             <div className="w-full grid-cols-1 lg:grid-cols-2 grid gap-x-4 gap-y-2">
               {ROszTIData.slice(0, ROszTIData.length - 3).map(
                 (item: ROszTIDataType) => (
