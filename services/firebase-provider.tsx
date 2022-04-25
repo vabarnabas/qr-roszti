@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app"
 import { getAuth, User } from "firebase/auth"
 import { useAuthState } from "react-firebase-hooks/auth"
-import React, { createContext } from "react"
+import React, { createContext, useContext } from "react"
 
 const firebaseConfig = {
   apiKey: "AIzaSyCIEff6iqI4ONlh8FlJrQ0YkmzKWJOjN7w",
@@ -15,16 +15,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 export const auth = getAuth(app)
 
-export const UserContext = createContext<User | undefined>(undefined)
+export const UserContext = createContext<User>({} as User)
 
-const UserProvider: React.FC = ({ children }) => {
+export const UserProvider: React.FC = ({ children }) => {
   const [user] = useAuthState(auth)
 
   return (
-    <UserContext.Provider value={user || undefined}>
+    <UserContext.Provider value={user || ({} as User)}>
       {children}
     </UserContext.Provider>
   )
 }
 
-export default UserProvider
+export const useUser = () => useContext(UserContext)

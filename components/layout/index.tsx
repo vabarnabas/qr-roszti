@@ -1,9 +1,20 @@
+import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
-import React from "react"
-import CommandPalette from "../command-palette/command-palette"
+import { useRouter } from "next/router"
+import React, { useEffect } from "react"
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth, useUser } from "../../services/firebase-provider"
 import Navbar from "./navbar"
 
 const Layout: React.FC = ({ children }) => {
+  const router = useRouter()
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      router.replace("/login")
+    }
+  })
+
   return (
     <div className="flex h-screen w-screen select-none bg-white text-slate-500">
       <Head>

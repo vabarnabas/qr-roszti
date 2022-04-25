@@ -143,21 +143,21 @@ const OpenROszTI = () => {
             </div>
           )}
           {ROszTIData && !ROszTIData?.message && (
-            <p className="mb-1 mt-3 text-sm">Események</p>
-          )}
-          {ROszTIData && !ROszTIData?.message && (
-            <div className="w-full grid-cols-1 lg:grid-cols-2 grid gap-x-4 gap-y-2">
-              {ROszTIData.slice(0, ROszTIData.length - 3).map(
-                (item: ROszTIDataType) => (
-                  <div
-                    key={item.event + item.point}
-                    className="flex items-center justify-between bg-slate-50 py-2 px-4 rounded-md"
-                  >
-                    <p className="">{item.event}</p>
-                    <p className="font-semibold">{item.point}</p>
-                  </div>
-                )
-              )}
+            <div className="w-full mt-3 ">
+              <p className="mb-1text-sm">Események</p>
+              <div className="w-full grid-cols-1 lg:grid-cols-2 grid gap-x-4 gap-y-2">
+                {ROszTIData.slice(0, ROszTIData.length - 3).map(
+                  (item: ROszTIDataType) => (
+                    <div
+                      key={item.event + item.point}
+                      className="flex items-center justify-between bg-slate-50 py-2 px-4 rounded-md"
+                    >
+                      <p className="">{item.event}</p>
+                      <p className="font-semibold">{item.point}</p>
+                    </div>
+                  )
+                )}
+              </div>
             </div>
           )}
         </div>

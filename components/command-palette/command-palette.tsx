@@ -84,7 +84,11 @@ const CommandPalette: React.FC = () => {
                     >
                       <div className="mr-3 text-sm">{option.icon}</div>
                       <p className="">{option.title}</p>
-                      <p className={`ml-1 ${active ? "text-slate-200" : ""}`}>
+                      <p
+                        className={`ml-1  ${
+                          active ? "text-slate-200" : "text-slate-400"
+                        }`}
+                      >
                         {" in " + option.group}
                       </p>
                     </div>

@@ -1,5 +1,11 @@
 import React from "react"
-import { FaPaperPlane, FaAddressBook } from "react-icons/fa"
+import {
+  FaPaperPlane,
+  FaAddressBook,
+  FaFolder,
+  FaGoogleDrive,
+  FaFacebookSquare,
+} from "react-icons/fa"
 import {
   IoGrid,
   IoCalendarClear,
@@ -7,9 +13,10 @@ import {
   IoHammer,
 } from "react-icons/io5"
 import { IoMdListBox, IoMdSettings } from "react-icons/io"
-import { MdCardGiftcard } from "react-icons/md"
 import { RiQrCodeLine, RiWalkFill, RiAccountBoxFill } from "react-icons/ri"
 import { useRouter } from "next/router"
+import { signOut } from "firebase/auth"
+import { auth } from "../services/firebase-provider"
 
 export interface MenuOptions {
   title: string
@@ -60,6 +67,11 @@ export const useMenuOptions = () => {
       group: "Main",
     },
     {
+      title: "Mass Upload",
+      icon: <IoHammer />,
+      group: "Tools",
+    },
+    {
       title: "Code Generator",
       icon: <IoHammer />,
       group: "Tools",
@@ -68,6 +80,38 @@ export const useMenuOptions = () => {
       title: "Event Manager",
       icon: <IoHammer />,
       group: "Tools",
+    },
+    {
+      title: "Resources",
+      icon: <FaFolder />,
+      group: "Main",
+    },
+    {
+      title: "Google Drive",
+      icon: <FaGoogleDrive />,
+      group: "Resources",
+      action: () =>
+        window.open(
+          "https://drive.google.com/drive/folders/0B26PP4TNCrAyQXViU1oya1ByNWc?resourcekey=0-923zeVTaOjCmGnPJohtA0A&usp=sharing",
+          "_blank"
+        ),
+    },
+    {
+      title: "Facebook Page",
+      icon: <FaFacebookSquare />,
+      group: "Resources",
+      action: () =>
+        window.open("https://www.facebook.com/estiembudapestbme", "_blank"),
+    },
+    {
+      title: "Facebook Group",
+      icon: <FaFacebookSquare />,
+      group: "Resources",
+      action: () =>
+        window.open(
+          "https://www.facebook.com/groups/estiem.budapest",
+          "_blank"
+        ),
     },
     {
       title: "Central Portal",
@@ -90,6 +134,10 @@ export const useMenuOptions = () => {
       title: "Logout",
       icon: <RiWalkFill />,
       group: "Profile",
+      action: () => {
+        signOut(auth)
+        router.push("/login")
+      },
     },
   ]
 

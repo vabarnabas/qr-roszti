@@ -1,6 +1,6 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
-import UserProvider from "../services/firebase-provider"
+import { UserProvider } from "../services/firebase-provider"
 import { QueryClient, QueryClientProvider } from "react-query"
 
 function MyApp({ Component, pageProps }: AppProps) {
