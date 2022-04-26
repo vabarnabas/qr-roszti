@@ -23,3 +23,11 @@ export const mutateNewUser = gql`
     }
   }
 `
+
+export const mutateDeleteUser = gql`
+  mutation MyMutation($id: uuid = "") {
+    delete_users_by_pk(id: $id) {
+      id
+    }
+  }
+`

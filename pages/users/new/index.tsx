@@ -7,8 +7,9 @@ import { MdOutlineAlternateEmail } from "react-icons/md"
 import { useMutation } from "urql"
 import Layout from "../../../components/layout"
 import { mutateNewUser } from "../../../graphql/mutations"
-import { useUser } from "../../../services/firebase-provider"
+import { auth, useUser } from "../../../services/firebase-provider"
 import { v4 as uuidv4 } from "uuid"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 
 interface UserData {
   displayName: string
@@ -30,8 +31,15 @@ const NewUser = () => {
 
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
+    const newUser = await createUserWithEmailAndPassword(
+      auth,
+      formData.email,
+      "ESTIEM2022"
+    )
+    await updateProfile(newUser.user, { displayName: formData.displayName })
     await createUser({
       id: uuidv4(),
+      googleid: newUser.user.uid,
       displayname: formData.displayName,
       email: formData.email,
       code: formData.code,
