@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.5.0",
+    "@types/uuid": "^8.3.4",
     "firebase": "^9.6.8",
+    "graphql": "^16.4.0",
     "next": "12.1.0",
     "qrcode.react": "^2.0.0",
     "react": "17.0.2",
@@ -18,7 +20,9 @@
     "react-firebase-hooks": "^5.0.3",
     "react-icons": "^4.3.1",
     "react-query": "^3.34.18",
-    "tailwind-scrollbar-hide": "^1.1.7"
+    "tailwind-scrollbar-hide": "^1.1.7",
+    "urql": "^2.2.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/node": "17.0.21",

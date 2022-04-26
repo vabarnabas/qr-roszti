@@ -2,12 +2,24 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
+import { useUser } from "../../services/firebase-provider"
 import CommandPalette from "../command-palette/command-palette"
 
 const Navbar = () => {
   const [openGroups, setOpenGroups] = useState<string[]>([])
-
   const { menuOptions } = useMenuOptions()
+  const user = useUser()
+
+  const getInitials = (name: string) => {
+    const fullName = name.split(" ")
+    if (name === "") {
+      return "PH"
+    }
+    if (fullName.length === 1) {
+      return `${fullName?.[0]?.charAt(0)}`
+    }
+    return `${fullName?.[0]?.charAt(0)}${fullName?.[1]?.charAt(0)}`
+  }
 
   useEffect(() => {
     setOpenGroups(JSON.parse(localStorage.getItem("openGroups") || "[]"))
@@ -24,11 +36,8 @@ const Navbar = () => {
   }
 
   return (
-    <div className="hidden md:block h-full w-72 overflow-y-auto bg-gray-50 px-4 pt-6 pb-12 text-inherit scrollbar-hide">
+    <div className="hidden md:block h-full w-72 overflow-y-auto bg-gray-50 px-4 py-6 text-inherit scrollbar-hide">
       <CommandPalette />
-      <div className="fixed bottom-0 left-0 flex h-10 w-72 items-center bg-soft-gray px-4 bg-inherit">
-        <HiTerminal className="cursor-pointer" />
-      </div>
       <div
         onClick={() => onGroupToggle("Profile")}
         className={`flex w-full cursor-pointer items-center justify-center px-2 py-2 outline-none hover:bg-slate-200 ${
@@ -38,11 +47,11 @@ const Navbar = () => {
         }`}
       >
         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-soft-green text-xs text-white">
-          VB
+          {getInitials(user?.displayName || "")}
         </div>
         <div className="ml-4 flex flex-col items-stretch">
           <p className="text-sm font-bold text-soft-green">RÖszTI Suite</p>
-          <p className="text-xs">Varga Barnabás</p>
+          <p className="text-xs"> {user?.displayName || "Place Holder"}</p>
         </div>
         {openGroups.includes("Profile") ? (
           <HiChevronUp className="ml-auto text-3xl" />

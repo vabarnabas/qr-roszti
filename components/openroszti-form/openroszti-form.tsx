@@ -1,16 +1,27 @@
-import { Dialog } from "@headlessui/react"
 import { useRouter } from "next/router"
-import React, { useState } from "react"
-import { HiX } from "react-icons/hi"
-import { SiLastpass } from "react-icons/si"
+import React, { SyntheticEvent, useState } from "react"
 import { VscSymbolString } from "react-icons/vsc"
 
 const OpenROszTIForm = () => {
   const [code, setCode] = useState("")
   const router = useRouter()
 
+  const onFormSubmit = (e: SyntheticEvent) => {
+    e.preventDefault()
+    router.push({
+      pathname: router.pathname,
+      query: {
+        q: code,
+      },
+    })
+  }
+
   return (
-    <form action="" className="w-full bg-white rounded-md p-4">
+    <form
+      action=""
+      onSubmit={(e) => onFormSubmit(e)}
+      className="w-full bg-white rounded-md"
+    >
       <p className="text-xl font-bold mb-6">openRÖszTI</p>
       <div className="relative flex items-center">
         <VscSymbolString className="absolute left-2" />
@@ -21,7 +32,7 @@ const OpenROszTIForm = () => {
             setCode(e.target.value.toLocaleUpperCase().slice(0, 6))
           }
           placeholder="RÖszTI Code"
-          className="bg-gray-50 rounded-md pl-8 pr-4 py-1.5 outline-none text-sm w-full"
+          className="form-input-field"
         />
       </div>
       <p className="text-xs inline-block mt-1">

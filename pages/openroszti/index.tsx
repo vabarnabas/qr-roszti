@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react"
 import { VscSymbolString } from "react-icons/vsc"
 import { useQuery, useQueryClient } from "react-query"
 import Layout from "../../components/layout"
+import OpenROszTIForm from "../../components/openroszti-form/openroszti-form"
 import Spinner from "../../components/spinner/spinner"
 
 interface ROszTIDataType {
@@ -42,7 +43,7 @@ const OpenROszTI = () => {
     }
 
     fetchIfCode()
-  }, [router.isReady])
+  }, [router.isReady, router.query])
 
   useEffect(() => {
     if (ROszTIData?.message) {
@@ -56,39 +57,7 @@ const OpenROszTI = () => {
         <Spinner />
       ) : (
         <div className="w-full h-full flex flex-col items-start justify-start py-6 px-8">
-          {!ROszTIData && (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                refetch()
-              }}
-              className="w-full"
-            >
-              <p className="text-xl font-bold mb-6">
-                openRÖszTI<span className="text-soft-green text-sm">v6.5</span>
-              </p>
-              <div className="relative flex items-center">
-                <VscSymbolString className="absolute left-2" />
-                <input
-                  type="text"
-                  value={queryCode}
-                  required
-                  onChange={(e) =>
-                    setQueryCode(e.target.value.toLocaleUpperCase().slice(0, 6))
-                  }
-                  placeholder="RÖszTI Code"
-                  className="form-input-field"
-                />
-              </div>
-              <p className="text-xs inline-block mt-1">
-                <span className="font-semibold text-soft-green">Hint:</span> the
-                code was sent in a mail previously.
-              </p>
-              <button className="bg-soft-green hover:bg-darker-soft-green py-1 px-4 rounded-md text-slate-50 w-full text-sm mt-3">
-                Next
-              </button>
-            </form>
-          )}
+          {!ROszTIData && <OpenROszTIForm />}
           {ROszTIData && !ROszTIData?.message && (
             <div className="w-full grid lg:grid-cols-2 mb-3 gap-x-4 gap-y-2">
               <div className="grid w-full grid-flow-col gap-x-6 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">

@@ -3,9 +3,9 @@ import { Menu } from "@headlessui/react"
 import { FaWalking, FaBookmark } from "react-icons/fa"
 import { RiQrCodeLine } from "react-icons/ri"
 import { BsFillCalendarEventFill } from "react-icons/bs"
-import { useRouter } from "next/router"
 import { signOut } from "firebase/auth"
 import { auth, UserContext } from "../../services/firebase-provider"
+import { useRouter } from "next/router"
 
 const Header = () => {
   const user = useContext(UserContext)

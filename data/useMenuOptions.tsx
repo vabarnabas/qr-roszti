@@ -5,6 +5,8 @@ import {
   FaFolder,
   FaGoogleDrive,
   FaFacebookSquare,
+  FaUser,
+  FaUserFriends,
 } from "react-icons/fa"
 import {
   IoGrid,
@@ -17,6 +19,7 @@ import { RiQrCodeLine, RiWalkFill, RiAccountBoxFill } from "react-icons/ri"
 import { useRouter } from "next/router"
 import { signOut } from "firebase/auth"
 import { auth } from "../services/firebase-provider"
+import { MdSettings } from "react-icons/md"
 
 export interface MenuOptions {
   title: string
@@ -62,26 +65,6 @@ export const useMenuOptions = () => {
       group: "Events",
     },
     {
-      title: "Tools",
-      icon: <IoHammer />,
-      group: "Main",
-    },
-    {
-      title: "Mass Upload",
-      icon: <IoHammer />,
-      group: "Tools",
-    },
-    {
-      title: "Code Generator",
-      icon: <IoHammer />,
-      group: "Tools",
-    },
-    {
-      title: "Event Manager",
-      icon: <IoHammer />,
-      group: "Tools",
-    },
-    {
       title: "Resources",
       icon: <FaFolder />,
       group: "Main",
@@ -114,6 +97,42 @@ export const useMenuOptions = () => {
         ),
     },
     {
+      title: "Tools",
+      icon: <IoHammer />,
+      group: "Main",
+    },
+    {
+      title: "Mass Upload",
+      icon: <IoHammer />,
+      group: "Tools",
+    },
+    {
+      title: "Code Generator",
+      icon: <IoHammer />,
+      group: "Tools",
+    },
+    {
+      title: "Event Manager",
+      icon: <IoHammer />,
+      group: "Tools",
+    },
+    {
+      title: "Configuration",
+      icon: <MdSettings />,
+      group: "Main",
+    },
+    {
+      title: "Users",
+      icon: <FaUser className="text-xs" />,
+      group: "Configuration",
+      action: () => router.push("/users"),
+    },
+    {
+      title: "User Roles",
+      icon: <FaUserFriends />,
+      group: "Configuration",
+    },
+    {
       title: "Central Portal",
       icon: <IoEarthSharp />,
       group: "Main",
@@ -124,6 +143,7 @@ export const useMenuOptions = () => {
       title: "Account",
       icon: <RiAccountBoxFill />,
       group: "Profile",
+      action: () => router.push("/account"),
     },
     {
       title: "Settings",

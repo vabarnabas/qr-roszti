@@ -29,14 +29,13 @@ const CommandPalette: React.FC = () => {
       className="fixed inset-0 z-50 flex justify-center bg-black/20 text-slate-500"
     >
       <Combobox
-        className="fixed top-[15%] w-1/2 rounded-md bg-white"
+        className="absolute top-[15%] w-1/2 rounded-md bg-white"
         value=""
         as="div"
         onChange={(item) => {
           const selectedOption = menuOptions.filter(
             (object) => object.title === item
           )[0]
-          console.log(selectedOption)
           selectedOption?.action && selectedOption.action()
           setQuery("")
           setIsOpen(false)
@@ -49,26 +48,25 @@ const CommandPalette: React.FC = () => {
         />
         <Combobox.Options
           static
-          className="max-h-64 overflow-y-auto scrollbar-hide m-2"
+          className="m-2 max-h-72 overflow-y-auto scrollbar-hide"
         >
           {menuOptions.filter(
             (object) =>
-              (object.group !== "Main" || object?.individual) &&
-              (object.title.toLowerCase().includes(query.toLocaleLowerCase()) ||
-                object.group
-                  .toLocaleLowerCase()
-                  .includes(query.toLocaleLowerCase()))
+              object.title.toLowerCase().includes(query.toLocaleLowerCase()) ||
+              object.group
+                .toLocaleLowerCase()
+                .includes(query.toLocaleLowerCase())
           ).length > 0 ? (
             menuOptions
               .filter(
                 (object) =>
-                  (object.group !== "Main" || object?.individual) &&
                   (object.title
                     .toLowerCase()
                     .includes(query.toLocaleLowerCase()) ||
                     object.group
                       .toLocaleLowerCase()
-                      .includes(query.toLocaleLowerCase()))
+                      .includes(query.toLocaleLowerCase())) &&
+                  object.group !== "Main"
               )
               .map((option) => (
                 <Combobox.Option
@@ -85,7 +83,7 @@ const CommandPalette: React.FC = () => {
                       <div className="mr-3 text-sm">{option.icon}</div>
                       <p className="">{option.title}</p>
                       <p
-                        className={`ml-1  ${
+                        className={`ml-1 ${
                           active ? "text-slate-200" : "text-slate-400"
                         }`}
                       >
