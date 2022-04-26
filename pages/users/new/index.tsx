@@ -74,7 +74,7 @@ const NewUser = () => {
                 onChange={(e) => {
                   handleChange(e)
                 }}
-                placeholder="Display Name"
+                placeholder="E-mail Address"
                 className="form-input-field"
               />
             </div>

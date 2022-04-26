@@ -1,5 +1,6 @@
 import { useRouter } from "next/router"
-import React from "react"
+import React, { useState } from "react"
+import { HiExternalLink } from "react-icons/hi"
 import { IoCube, IoSearch } from "react-icons/io5"
 import { useQuery } from "urql"
 import Layout from "../../components/layout"
@@ -18,6 +19,7 @@ interface User {
 const Users = () => {
   const [{ data, fetching }] = useQuery({ query: queryUsers })
   const router = useRouter()
+  const [searchString, setSearchString] = useState("")
 
   return (
     <Layout>
@@ -27,6 +29,8 @@ const Users = () => {
             <IoSearch className="absolute left-2" />
             <input
               placeholder="Search in Users"
+              value={searchString}
+              onChange={(e) => setSearchString(e.target.value)}
               type="text"
               className="form-input-field"
             />
@@ -38,13 +42,30 @@ const Users = () => {
             New
           </button>
         </div>
-        <div className="flex flex-1 mt-4">
-          {data?.users_aggregate?.nodes &&
-            data.users_aggregate.nodes.map((item: User) => (
-              <div key={item.id} className="">
-                {item.displayname}
-              </div>
-            ))}
+        <div className="flex flex-1 mt-4 w-full">
+          <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-3">
+            {data?.users_aggregate?.nodes &&
+              data.users_aggregate.nodes
+                .filter((object: User) =>
+                  object.displayname
+                    .toLowerCase()
+                    .includes(searchString.toLocaleLowerCase())
+                )
+                .map((item: User) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between w-full rounded-md bg-slate-50 px-4 py-2 h-min"
+                  >
+                    <div className="">
+                      <p className="font-semibold text-lg">
+                        {item.displayname}
+                      </p>
+                      <p className="-mt-1 text-xs">{item.email}</p>
+                    </div>
+                    <HiExternalLink className="text-xl cursor-pointer hover:text-soft-green" />
+                  </div>
+                ))}
+          </div>
         </div>
       </div>
     </Layout>

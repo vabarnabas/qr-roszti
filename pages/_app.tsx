@@ -9,9 +9,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ClientProvider>
-      <UserProvider>
-        <Component {...pageProps} />
-      </UserProvider>
+      <QueryClientProvider client={queryClient}>
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      </QueryClientProvider>
     </ClientProvider>
   )
 }
