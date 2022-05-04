@@ -5,9 +5,9 @@ import {
   FaFolder,
   FaGoogleDrive,
   FaFacebookSquare,
-  FaUser,
   FaUserFriends,
   FaUserCog,
+  FaInstagram,
 } from "react-icons/fa"
 import {
   IoGrid,
@@ -21,6 +21,7 @@ import { useRouter } from "next/router"
 import { signOut } from "firebase/auth"
 import { auth } from "../services/firebase-provider"
 import { MdSettings } from "react-icons/md"
+import { AiFillSound } from "react-icons/ai"
 
 export interface MenuOptions {
   title: string
@@ -61,6 +62,11 @@ export const useMenuOptions = () => {
       group: "Events",
     },
     {
+      title: "Open Calls",
+      icon: <AiFillSound />,
+      group: "Events",
+    },
+    {
       title: "Event List",
       icon: <IoMdListBox />,
       group: "Events",
@@ -96,6 +102,13 @@ export const useMenuOptions = () => {
           "https://www.facebook.com/groups/estiem.budapest",
           "_blank"
         ),
+    },
+    {
+      title: "Instagram",
+      icon: <FaInstagram />,
+      group: "Resources",
+      action: () =>
+        window.open("https://www.instagram.com/estiembudapestbme", "_blank"),
     },
     {
       title: "Tools",

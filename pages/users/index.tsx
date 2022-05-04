@@ -72,10 +72,10 @@ const Users = () => {
                   .map((item: User) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between w-full rounded-md bg-slate-50 px-4 py-2 h-min"
+                      className="group flex items-center justify-between w-full rounded-md border hover:border-soft-green cursor-pointer px-4 py-2 h-min"
                     >
                       <div className="">
-                        <p className="font-semibold text-lg">
+                        <p className="font-semibold text-lg group-hover:text-soft-green">
                           {item.displayname}
                         </p>
                         <p className="-mt-1 text-xs">{item.email}</p>
