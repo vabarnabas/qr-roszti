@@ -46,9 +46,13 @@ const OpenROszTI = () => {
   }, [router.isReady, router.query])
 
   useEffect(() => {
-    if (ROszTIData?.message) {
-      router.reload()
+    const reloadOnError = async () => {
+      if (ROszTIData?.message) {
+        await router.push({ pathname: router.pathname, query: {} })
+        await router.reload()
+      }
     }
+    reloadOnError()
   }, [ROszTIData])
 
   return (

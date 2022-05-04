@@ -7,6 +7,7 @@ import {
   FaFacebookSquare,
   FaUser,
   FaUserFriends,
+  FaUserCog,
 } from "react-icons/fa"
 import {
   IoGrid,
@@ -51,7 +52,7 @@ export const useMenuOptions = () => {
     },
     {
       title: "QR Code",
-      icon: <RiQrCodeLine className="text-base" />,
+      icon: <RiQrCodeLine />,
       group: "My RÖszTI",
     },
     {
@@ -61,7 +62,7 @@ export const useMenuOptions = () => {
     },
     {
       title: "Event List",
-      icon: <IoMdListBox className="text-base" />,
+      icon: <IoMdListBox />,
       group: "Events",
     },
     {
@@ -123,7 +124,7 @@ export const useMenuOptions = () => {
     },
     {
       title: "Users",
-      icon: <FaUser className="text-xs" />,
+      icon: <FaUserCog />,
       group: "Configuration",
       action: () => router.push("/users"),
     },

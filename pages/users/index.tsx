@@ -8,6 +8,7 @@ import Layout from "../../components/layout"
 import Spinner from "../../components/spinner/spinner"
 import { mutateDeleteUser } from "../../graphql/mutations"
 import { queryUsers } from "../../graphql/queries"
+import { auth } from "../../services/firebase-provider"
 
 interface User {
   id: string
@@ -21,8 +22,9 @@ interface User {
 
 const Users = () => {
   const [{ data, fetching }, getUsers] = useQuery({ query: queryUsers })
-  const [, deleteUser] = useMutation(mutateDeleteUser)
+  const [, removeUser] = useMutation(mutateDeleteUser)
   const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
   const [searchString, setSearchString] = useState("")
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const Users = () => {
           </button>
         </div>
         <div className="flex flex-1 mt-4 w-full">
-          {fetching ? (
+          {fetching || loading ? (
             <div className="h-full w-full flex items-center justify-center">
               <Spinner />
             </div>
@@ -81,8 +83,10 @@ const Users = () => {
                       <div className="flex items-center justify-center space-x-2">
                         <MdDelete
                           onClick={async () => {
-                            await deleteUser({ id: item.id })
+                            setLoading(true)
+                            await removeUser({ id: item.id })
                             await getUsers()
+                            setLoading(false)
                           }}
                           className="text-xl cursor-pointer hover:text-soft-yellow"
                         />
