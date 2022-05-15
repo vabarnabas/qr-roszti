@@ -31,6 +31,11 @@ interface User {
   code: string
 }
 
+/**
+ * The type for an Events's type.
+ */
+type EventType = "LOCAL" | "CENTRAL" | "OPENCALL"
+
 interface Event {
   /**
    * The unique identifier of the Event.
@@ -55,7 +60,7 @@ interface Event {
   /**
    * The type of the Event.
    */
-  eventtype: string
+  eventtype: EventType
   /**
    * The deadline to join the Event.
    */

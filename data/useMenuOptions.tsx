@@ -23,18 +23,19 @@ import { auth } from "../services/firebase-provider"
 import { MdSettings } from "react-icons/md"
 import { AiFillSound } from "react-icons/ai"
 
-export interface MenuOptions {
+export interface MenuOption {
   title: string
   icon: JSX.Element
   group: string
   individual?: boolean
   action?: (...args: any) => void
+  visible?: boolean
 }
 
 export const useMenuOptions = () => {
   const router = useRouter()
 
-  const menuOptions: MenuOptions[] = [
+  const menuOptions: MenuOption[] = [
     {
       title: "My RÖszTI",
       icon: <IoGrid />,
