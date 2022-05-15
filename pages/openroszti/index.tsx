@@ -69,23 +69,23 @@ const OpenROszTI = () => {
                   <p className="font-bold">
                     {ROszTIData[ROszTIData.length - 2]?.point}
                   </p>
-                  <p className="text-sm text-center">Elért Pontszám</p>
+                  <p className="text-sm text-center">Points</p>
                 </div>
                 {parseInt(ROszTIData[ROszTIData.length - 2]?.point) < 6 ? (
                   <p className="text-xs">
-                    Még
+                    You need
                     <span className="mx-1 text-soft-green font-semibold">
                       {6 - parseInt(ROszTIData[ROszTIData.length - 2]?.point)}
                     </span>
-                    pontot kell elérned az aktív tagsághoz.
+                    more points to be active.
                     <span className="text-soft-green hover:underline cursor-pointer">
-                      Tovább az elkövetkező eseményekhez.
+                      Go to upcoming events.
                     </span>
                   </p>
                 ) : (
                   <p className="text-xs">
-                    Már elérted az aktív tagsághoz elegendő pontot, viszont még
-                    rengeteg esemény vár rád!
+                    You already reached active member status, but there are
+                    always more events to see.
                   </p>
                 )}
               </div>
@@ -94,21 +94,21 @@ const OpenROszTI = () => {
                   <p className="font-bold">
                     {ROszTIData[ROszTIData.length - 1]?.point}
                   </p>
-                  <p className="mr-2 text-sm text-center">Szavazati Jog</p>
+                  <p className="text-sm text-center">Vote</p>
                 </div>
                 <p className="">
                   {" "}
                   {ROszTIData[ROszTIData.length - 3]?.point === "Not Active" ? (
                     <p className="text-xs">
-                      Sajnos jelenleg ebben a félévben, még{" "}
-                      <span className="text-soft-green">nem</span> érted el, az
-                      aktív tagság követelményeit.
+                      Sadly in this semester you{" "}
+                      <span className="text-soft-green">haven't</span> reached
+                      the requirement of the active members.
                     </p>
                   ) : (
                     <p className="text-xs">
-                      Gratulálunk, ebben a félévben az{" "}
-                      <span className="text-soft-green">aktív tagságot</span>{" "}
-                      erősíted. Reméljük sok eseményen látunk majd!
+                      Congratulations, this semester you{" "}
+                      <span className="text-soft-green">are a part of</span> the
+                      active members. Hope to see you in upcoming events.
                     </p>
                   )}
                 </p>
@@ -117,7 +117,7 @@ const OpenROszTI = () => {
           )}
           {ROszTIData && !ROszTIData?.message && (
             <div className="w-full mt-3 ">
-              <p className="mb-1text-sm">Események</p>
+              <p className="mb-1 text-sm">Events</p>
               <div className="w-full grid-cols-1 lg:grid-cols-2 grid gap-x-4 gap-y-2">
                 {ROszTIData.slice(0, ROszTIData.length - 3).map(
                   (item: ROszTIDataType) => (

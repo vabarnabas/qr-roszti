@@ -14,3 +14,24 @@ export const queryUsers = gql`
     }
   }
 `
+
+export const queryEvents = gql`
+  query queryEvents {
+    events_aggregate {
+      nodes {
+        createdby
+        deadline
+        description
+        displayname
+        eventlocation
+        eventdate
+        eventtype
+        id
+        user {
+          displayname
+          email
+        }
+      }
+    }
+  }
+`

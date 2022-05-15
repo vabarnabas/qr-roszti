@@ -129,6 +129,7 @@ export const useMenuOptions = () => {
       title: "Event Manager",
       icon: <IoHammer />,
       group: "Tools",
+      action: () => router.push("/events/management"),
     },
     {
       title: "Configuration",

@@ -25,8 +25,16 @@ export const mutateNewUser = gql`
 `
 
 export const mutateDeleteUser = gql`
-  mutation MyMutation($id: uuid = "") {
+  mutation mutateDeleteUser($id: uuid!) {
     delete_users_by_pk(id: $id) {
+      id
+    }
+  }
+`
+
+export const mutateDeleteEvent = gql`
+  mutation mutateDeleteEvent($id: uuid!) {
+    delete_events_by_pk(id: $id) {
       id
     }
   }

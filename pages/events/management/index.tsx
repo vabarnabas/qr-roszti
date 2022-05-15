@@ -4,21 +4,21 @@ import { HiExternalLink } from "react-icons/hi"
 import { IoCube, IoSearch } from "react-icons/io5"
 import { MdDelete } from "react-icons/md"
 import { useMutation, useQuery } from "urql"
-import Layout from "../../components/layout"
-import Spinner from "../../components/spinner/spinner"
-import { mutateDeleteUser } from "../../graphql/mutations"
-import { queryUsers } from "../../graphql/queries"
+import Layout from "../../../components/layout"
+import Spinner from "../../../components/spinner/spinner"
+import { mutateDeleteEvent, mutateDeleteUser } from "../../../graphql/mutations"
+import { queryEvents, queryUsers } from "../../../graphql/queries"
 
-const Users = () => {
-  const [{ data, fetching }, getUsers] = useQuery({ query: queryUsers })
-  const [, removeUser] = useMutation(mutateDeleteUser)
+const Events = () => {
+  const [{ data, fetching }, getEvents] = useQuery({ query: queryEvents })
+  const [, removeEvent] = useMutation(mutateDeleteEvent)
   const router = useRouter()
   const [loading, setLoading] = useState<boolean>(false)
   const [searchString, setSearchString] = useState("")
 
   useEffect(() => {
     const reFetch = async () => {
-      await getUsers()
+      await getEvents()
     }
     reFetch()
   }, [])
@@ -30,7 +30,7 @@ const Users = () => {
           <div className="relative flex items-center w-full">
             <IoSearch className="absolute left-2" />
             <input
-              placeholder="Search in Users"
+              placeholder="Search in Events"
               value={searchString}
               onChange={(e) => setSearchString(e.target.value)}
               type="text"
@@ -51,30 +51,30 @@ const Users = () => {
             </div>
           ) : (
             <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-3">
-              {data?.users_aggregate?.nodes &&
-                data.users_aggregate.nodes
-                  .filter((object: User) =>
+              {data?.events_aggregate?.nodes &&
+                data.events_aggregate.nodes
+                  .filter((object: Event) =>
                     object.displayname
                       .toLowerCase()
                       .includes(searchString.toLocaleLowerCase())
                   )
-                  .map((item: User) => (
+                  .map((item: Event) => (
                     <div
                       key={item.id}
                       className="group flex items-center justify-between w-full rounded-md bg-slate-50 cursor-pointer px-4 py-2 h-min"
                     >
-                      <div className="">
+                      <div className="mr-2">
                         <p className="font-semibold text-lg">
                           {item.displayname}
                         </p>
-                        <p className="-mt-1 text-xs">{item.email}</p>
+                        <p className="text-xs">{item.description}</p>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <MdDelete
                           onClick={async () => {
                             setLoading(true)
-                            await removeUser({ id: item.id })
-                            await getUsers()
+                            await removeEvent({ id: item.id })
+                            await getEvents()
                             setLoading(false)
                           }}
                           className="text-xl cursor-pointer hover:text-soft-yellow"
@@ -91,4 +91,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Events

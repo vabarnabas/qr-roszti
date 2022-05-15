@@ -1,7 +1,7 @@
 import { createClient, Provider } from "urql"
 
 const client = createClient({
-  url: "https://enabling-pipefish-18.hasura.app/v1/graphql",
+  url: "https://roszti-suite.hasura.app/v1/graphql",
   fetchOptions: {
     headers: {
       "x-hasura-admin-secret":
