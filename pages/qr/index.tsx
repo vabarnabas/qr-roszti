@@ -6,16 +6,15 @@ import { UserContext } from "../../services/firebase-provider"
 
 const QRView = () => {
   const user = useContext(UserContext)
-  console.log(user)
   const [date, setDate] = useState(Date.now())
 
   return (
     <Layout>
       <QRCode
-        className="rounded-lg"
+        className="rounded-md"
         value={(user?.uid || "") + "_" + date}
-        bgColor="#e2e8f0"
-        fgColor="#1e293b"
+        bgColor="#f8fafc"
+        fgColor="#334155"
         includeMargin={true}
         size={312}
       />

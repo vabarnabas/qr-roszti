@@ -55,6 +55,7 @@ export const useMenuOptions = () => {
       title: "QR Code",
       icon: <RiQrCodeLine />,
       group: "My RÖszTI",
+      action: () => router.push("/qr"),
     },
     {
       title: "Upcoming Events",
@@ -115,11 +116,11 @@ export const useMenuOptions = () => {
       icon: <IoHammer />,
       group: "Main",
     },
-    {
-      title: "Mass Upload",
-      icon: <IoHammer />,
-      group: "Tools",
-    },
+    // {
+    //   title: "Mass Upload",
+    //   icon: <IoHammer />,
+    //   group: "Tools",
+    // },
     {
       title: "Code Generator",
       icon: <IoHammer />,
