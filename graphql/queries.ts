@@ -35,3 +35,28 @@ export const queryEvents = gql`
     }
   }
 `
+
+export const queryUserByEmail = gql`
+  query queryUserByEmail($_eq: String!) {
+    users(where: { email: { _eq: $_eq } }) {
+      id
+      password
+      email
+    }
+  }
+`
+
+export const queryUserById = gql`
+  query queryUserById($id: uuid!) {
+    users_by_pk(id: $id) {
+      code
+      createdat
+      displayname
+      email
+      googleid
+      id
+      password
+      role
+    }
+  }
+`

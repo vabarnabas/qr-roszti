@@ -2,7 +2,7 @@ import Image from "next/image"
 import QRCode from "qrcode.react"
 import React, { useContext, useEffect, useState } from "react"
 import Layout from "../../components/layout"
-import { UserContext } from "../../services/firebase-provider"
+import { UserContext } from "../../providers/firebase-provider"
 
 const QRView = () => {
   const user = useContext(UserContext)

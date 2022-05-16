@@ -19,9 +19,10 @@ import { IoMdListBox, IoMdSettings } from "react-icons/io"
 import { RiQrCodeLine, RiWalkFill, RiAccountBoxFill } from "react-icons/ri"
 import { useRouter } from "next/router"
 import { signOut } from "firebase/auth"
-import { auth } from "../services/firebase-provider"
+import { auth } from "../providers/firebase-provider"
 import { MdSettings } from "react-icons/md"
 import { AiFillSound } from "react-icons/ai"
+import { useUserStorage } from "../providers/user.provider"
 
 export interface MenuOption {
   title: string
@@ -34,6 +35,7 @@ export interface MenuOption {
 
 export const useMenuOptions = () => {
   const router = useRouter()
+  const { removeUser } = useUserStorage()
 
   const menuOptions: MenuOption[] = [
     {
@@ -172,7 +174,7 @@ export const useMenuOptions = () => {
       icon: <RiWalkFill />,
       group: "Profile",
       action: () => {
-        signOut(auth)
+        removeUser()
         router.push("/login")
       },
     },

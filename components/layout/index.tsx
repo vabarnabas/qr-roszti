@@ -3,7 +3,7 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import React, { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { auth, useUser } from "../../services/firebase-provider"
+import { auth, useUser } from "../../providers/firebase-provider"
 import Navbar from "./navbar"
 
 const Layout: React.FC = ({ children }) => {

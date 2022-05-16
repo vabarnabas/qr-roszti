@@ -2,12 +2,13 @@ import { gql } from "urql"
 
 export const mutateNewUser = gql`
   mutation mutateNewUser(
-    $id: uuid = ""
-    $googleid: String = ""
-    $displayname: String = ""
-    $email: String = ""
-    $role: String = ""
-    $code: String = ""
+    $id: uuid!
+    $googleid: String!
+    $displayname: String!
+    $email: String!
+    $role: String!
+    $code: String!
+    $password: String!
   ) {
     insert_users_one(
       object: {
@@ -17,6 +18,7 @@ export const mutateNewUser = gql`
         email: $email
         role: $role
         code: $code
+        password: $password
       }
     ) {
       id

@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import React, { SyntheticEvent, useEffect, useState } from "react"
 import { IoCube } from "react-icons/io5"
 import Layout from "../../components/layout"
-import { auth, useUser } from "../../services/firebase-provider"
+import { auth, useUser } from "../../providers/firebase-provider"
 
 interface UserData {
   displayName: string

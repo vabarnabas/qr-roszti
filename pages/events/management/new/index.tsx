@@ -7,7 +7,7 @@ import { MdOutlineAlternateEmail } from "react-icons/md"
 import { useMutation } from "urql"
 import Layout from "../../../../components/layout"
 import { mutateNewUser } from "../../../../graphql/mutations"
-import { auth, useUser } from "../../../../services/firebase-provider"
+import { auth, useUser } from "../../../../providers/firebase-provider"
 import { v4 as uuidv4 } from "uuid"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 

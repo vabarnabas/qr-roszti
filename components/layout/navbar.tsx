@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useState } from "react"
 import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
-import { useUser } from "../../services/firebase-provider"
+import { useUser } from "../../providers/firebase-provider"
 import CommandPalette from "../command-palette/command-palette"
 
 const Navbar = () => {

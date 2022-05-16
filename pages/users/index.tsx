@@ -8,6 +8,7 @@ import Layout from "../../components/layout"
 import Spinner from "../../components/spinner/spinner"
 import { mutateDeleteUser } from "../../graphql/mutations"
 import { queryUsers } from "../../graphql/queries"
+import { chainFilter } from "../../services/chainFilter"
 
 const Users = () => {
   const [{ data, fetching }, getUsers] = useQuery({ query: queryUsers })
@@ -52,12 +53,9 @@ const Users = () => {
           ) : (
             <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-3">
               {data?.users_aggregate?.nodes &&
-                data.users_aggregate.nodes
-                  .filter((object: User) =>
-                    object.displayname
-                      .toLowerCase()
-                      .includes(searchString.toLocaleLowerCase())
-                  )
+                chainFilter(data.users_aggregate.nodes)
+                  .filterText(searchString, true, "displayname")
+                  .out()
                   .map((item: User) => (
                     <div
                       key={item.id}

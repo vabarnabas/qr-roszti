@@ -1,45 +1,86 @@
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { useRouter } from "next/router"
-import React, { SyntheticEvent, useState } from "react"
+import React, { SyntheticEvent, useEffect, useState } from "react"
 import { BsFillEnvelopeFill } from "react-icons/bs"
 import { MdPassword } from "react-icons/md"
-import { auth } from "../../services/firebase-provider"
+import { useQuery } from "urql"
+import { queryUserByEmail, queryUserById } from "../../graphql/queries"
+import { auth } from "../../providers/firebase-provider"
+import { useUserStorage } from "../../providers/user.provider"
+import { comparePassword, hashPassword } from "../../services/api-handlers"
 
 const LoginView = () => {
   const router = useRouter()
+  const { createUser, userStorage } = useUserStorage()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
 
+  const [{ data, fetching }, getUserByEmail] = useQuery({
+    query: queryUserByEmail,
+    variables: { _eq: email },
+    pause: true,
+  })
+
+  const [{ data: userData, fetching: userFetching }, getUserById] = useQuery({
+    query: queryUserById,
+    variables: { id: data?.users[0].id },
+    pause: true,
+  })
+
   const onFromSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
-    try {
-      await signInWithEmailAndPassword(auth, email, password)
-      await router.push("/")
-    } catch (error: any) {
-      switch (error.code) {
-        case "auth/invalid-email":
-          setError("Hibás vagy ismeretlen e-mail cím!")
-          break
-        case "auth/internal-error":
-          setError("Hibás vagy hiányzó adatok!")
-          break
-        case "auth/wrong-password":
-          setError("Hibás jelszó!")
-          break
-        case "auth/too-many-requests":
-          setError("Túl sok próbálkozás")
-          break
-        case "auth/user-not-found":
-          setError("Ismeretlen felhasználó!")
-          break
-        default:
-          setError("")
-          break
-      }
-    }
+    await getUserByEmail({ requestPolicy: "network-only" })
+    // try {
+    //   await signInWithEmailAndPassword(auth, email, password)
+    //   await router.push("/")
+    // } catch (error: any) {
+    //   switch (error.code) {
+    //     case "auth/invalid-email":
+    //       setError("Hibás vagy ismeretlen e-mail cím!")
+    //       break
+    //     case "auth/internal-error":
+    //       setError("Hibás vagy hiányzó adatok!")
+    //       break
+    //     case "auth/wrong-password":
+    //       setError("Hibás jelszó!")
+    //       break
+    //     case "auth/too-many-requests":
+    //       setError("Túl sok próbálkozás")
+    //       break
+    //     case "auth/user-not-found":
+    //       setError("Ismeretlen felhasználó!")
+    //       break
+    //     default:
+    //       setError("")
+    //       break
+    //   }
+    // }
   }
+
+  // console.log(userStorage)
+
+  useEffect(() => {
+    if (data && !fetching) {
+      const authenticateUser = async () => {
+        const match = await comparePassword(password, data?.users[0].password)
+        if (match.message === "Success.") {
+          await getUserById({ requestPolicy: "network-only" })
+        } else {
+          setError("Invalid e-mail or password.")
+        }
+      }
+      authenticateUser()
+    }
+  }, [data, fetching])
+
+  useEffect(() => {
+    if (userData && !userFetching) {
+      createUser(userData.users_by_pk)
+      router.push("/")
+    }
+  }, [userData, userFetching])
 
   return (
     <div className="select-none w-screen h-screen bg-white text-slate-500 flex justify-center border-inherit px-6 items-center">

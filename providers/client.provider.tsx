@@ -1,7 +1,14 @@
-import { createClient, Provider } from "urql"
+import {
+  cacheExchange,
+  createClient,
+  dedupExchange,
+  fetchExchange,
+  Provider,
+} from "urql"
 
 const client = createClient({
   url: "https://roszti-suite.hasura.app/v1/graphql",
+  exchanges: [dedupExchange, cacheExchange, fetchExchange],
   fetchOptions: {
     headers: {
       "x-hasura-admin-secret":

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import React, { SyntheticEvent, useState } from "react"
+import React, { SyntheticEvent, useEffect, useState } from "react"
 import { CgRename } from "react-icons/cg"
 import { FaUserFriends } from "react-icons/fa"
 import { IoGrid } from "react-icons/io5"
@@ -7,9 +7,10 @@ import { MdOutlineAlternateEmail } from "react-icons/md"
 import { useMutation } from "urql"
 import Layout from "../../../components/layout"
 import { mutateNewUser } from "../../../graphql/mutations"
-import { auth, useUser } from "../../../services/firebase-provider"
+import { auth } from "../../../providers/firebase-provider"
 import { v4 as uuidv4 } from "uuid"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { hashPassword } from "../../../services/api-handlers"
 
 interface UserData {
   displayName: string
@@ -20,7 +21,6 @@ interface UserData {
 
 const NewUser = () => {
   const router = useRouter()
-  const user = useUser()
   const [formData, setFormData] = useState<UserData>({} as UserData)
   const [, createUser] = useMutation(mutateNewUser)
 
@@ -31,6 +31,7 @@ const NewUser = () => {
 
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
+    const password = await hashPassword("ESTIEM2022")
     const newUser = await createUserWithEmailAndPassword(
       auth,
       formData.email,
@@ -44,6 +45,7 @@ const NewUser = () => {
       email: formData.email,
       code: formData.code,
       role: formData.role,
+      password,
     })
     await router.push("/users")
   }
@@ -123,5 +125,3 @@ const NewUser = () => {
     </Layout>
   )
 }
-
-export default NewUser

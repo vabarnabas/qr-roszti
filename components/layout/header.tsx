@@ -4,7 +4,7 @@ import { FaWalking, FaBookmark } from "react-icons/fa"
 import { RiQrCodeLine } from "react-icons/ri"
 import { BsFillCalendarEventFill } from "react-icons/bs"
 import { signOut } from "firebase/auth"
-import { auth, UserContext } from "../../services/firebase-provider"
+import { auth, UserContext } from "../../providers/firebase-provider"
 import { useRouter } from "next/router"
 
 const Header = () => {
