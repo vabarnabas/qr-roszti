@@ -8,7 +8,6 @@ interface User {
    * The unique identifier of the User.
    */
   id: string
-  googleid: string
   /**
    * The role of the User.
    */
@@ -24,7 +23,7 @@ interface User {
   /**
    * The date of the Users's creation.
    */
-  createdat: Date
+  createdat?: Date
   /**
    * The RÖszTI code of the User.
    */

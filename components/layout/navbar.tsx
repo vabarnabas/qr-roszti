@@ -3,12 +3,13 @@ import { useState } from "react"
 import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
 import { useUser } from "../../providers/firebase-provider"
+import { useUserStorage } from "../../providers/user.provider"
 import CommandPalette from "../command-palette/command-palette"
 
 const Navbar = () => {
   const [openGroups, setOpenGroups] = useState<string[]>([])
   const { menuOptions } = useMenuOptions()
-  const user = useUser()
+  const { userStorage } = useUserStorage()
 
   const getInitials = (name: string) => {
     const fullName = name.split(" ")
@@ -47,11 +48,13 @@ const Navbar = () => {
         }`}
       >
         <div className="flex h-7 w-7 items-center justify-center rounded-full bg-soft-green text-xs text-white">
-          {getInitials(user?.displayName || "")}
+          {getInitials(userStorage?.displayname || "")}
         </div>
         <div className="ml-4 flex flex-col items-stretch">
           <p className="text-sm font-bold text-soft-green">RÖszTI Suite</p>
-          <p className="text-xs"> {user?.displayName || "Place Holder"}</p>
+          <p className="text-xs">
+            {userStorage?.displayname || "Place Holder"}
+          </p>
         </div>
         {openGroups.includes("Profile") ? (
           <HiChevronUp className="ml-auto text-3xl" />
@@ -77,7 +80,11 @@ const Navbar = () => {
       )}
       <div className="mt-6 flex flex-col items-start space-y-2">
         {menuOptions
-          .filter((object) => object.group === "Main")
+          .filter(
+            (object) =>
+              object.group === "Main" &&
+              (object?.visible !== undefined ? object.visible : true)
+          )
           .map((item) => (
             <div
               onClick={() => item?.action && item?.individual && item?.action()}
@@ -90,6 +97,7 @@ const Navbar = () => {
               >
                 <div className="mr-3 text-base">{item.icon}</div>
                 <p className="text-sm">{item.title}</p>
+                <p className="">{item?.visible}</p>
                 {!item?.individual &&
                   (openGroups.includes(item.title) ? (
                     <HiChevronUp className="ml-auto text-xl" />

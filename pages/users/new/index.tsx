@@ -32,15 +32,8 @@ const NewUser = () => {
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
     const password = await hashPassword("ESTIEM2022")
-    const newUser = await createUserWithEmailAndPassword(
-      auth,
-      formData.email,
-      "ESTIEM2022"
-    )
-    await updateProfile(newUser.user, { displayName: formData.displayName })
     await createUser({
       id: uuidv4(),
-      googleid: newUser.user.uid,
       displayname: formData.displayName,
       email: formData.email,
       code: formData.code,
@@ -125,3 +118,5 @@ const NewUser = () => {
     </Layout>
   )
 }
+
+export default NewUser

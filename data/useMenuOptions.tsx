@@ -35,7 +35,7 @@ export interface MenuOption {
 
 export const useMenuOptions = () => {
   const router = useRouter()
-  const { removeUser } = useUserStorage()
+  const { removeUser, userStorage } = useUserStorage()
 
   const menuOptions: MenuOption[] = [
     {
@@ -52,7 +52,11 @@ export const useMenuOptions = () => {
       title: "openRÖszTI",
       icon: <FaAddressBook />,
       group: "My RÖszTI",
-      action: () => router.push("/openroszti"),
+      action: () =>
+        router.push({
+          pathname: "/openroszti",
+          query: { q: userStorage.code },
+        }),
     },
     {
       title: "QR Code",
@@ -118,6 +122,7 @@ export const useMenuOptions = () => {
       title: "Tools",
       icon: <IoHammer />,
       group: "Main",
+      visible: userStorage.role === "ADMIN",
     },
     // {
     //   title: "Mass Upload",
@@ -128,28 +133,33 @@ export const useMenuOptions = () => {
       title: "Code Generator",
       icon: <IoHammer />,
       group: "Tools",
+      visible: userStorage.role === "ADMIN",
     },
     {
-      title: "Event Manager",
-      icon: <IoHammer />,
-      group: "Tools",
-      action: () => router.push("/events/management"),
-    },
-    {
-      title: "Configuration",
+      title: "Management",
       icon: <MdSettings />,
+      visible: userStorage.role === "ADMIN",
       group: "Main",
     },
     {
       title: "Users",
       icon: <FaUserCog />,
-      group: "Configuration",
+      group: "Management",
+      visible: userStorage.role === "ADMIN",
       action: () => router.push("/users"),
     },
     {
       title: "User Roles",
       icon: <FaUserFriends />,
+      visible: userStorage.role === "ADMIN",
       group: "Configuration",
+    },
+    {
+      title: "Event Manager",
+      icon: <IoGrid />,
+      group: "Management",
+      visible: userStorage.role === "ADMIN",
+      action: () => router.push("/events/management"),
     },
     {
       title: "Central Portal",

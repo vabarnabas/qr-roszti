@@ -25,7 +25,12 @@ const OpenROszTI = () => {
     "roszti-data",
     async () => {
       const res = await fetch(
-        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/${queryCode}?range=2021-2022%20tavasz%20events`
+        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/${queryCode}?range=2021-2022%20tavasz%20events`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+          },
+        }
       )
       return res.json()
     },

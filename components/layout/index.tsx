@@ -9,11 +9,11 @@ import Navbar from "./navbar"
 const Layout: React.FC = ({ children }) => {
   const router = useRouter()
 
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      router.replace("/login")
-    }
-  })
+  // onAuthStateChanged(auth, (user) => {
+  //   if (!user) {
+  //     router.replace("/login")
+  //   }
+  // })
 
   return (
     <div className="flex h-screen w-screen select-none bg-white text-slate-500">
