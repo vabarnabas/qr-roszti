@@ -51,7 +51,7 @@ const Users = () => {
               <Spinner />
             </div>
           ) : (
-            <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-3">
+            <div className="w-full h-min gap-x-4 gap-y-3 grid grid-cols-1">
               {data?.users_aggregate?.nodes &&
                 chainFilter(data.users_aggregate.nodes)
                   .filterText(searchString, true, "displayname")
@@ -77,7 +77,15 @@ const Users = () => {
                           }}
                           className="text-xl cursor-pointer hover:text-soft-yellow"
                         />
-                        <HiExternalLink className="text-xl cursor-pointer hover:text-soft-green" />
+                        <HiExternalLink
+                          onClick={() =>
+                            router.push({
+                              pathname: "/openroszti",
+                              query: { q: item.code },
+                            })
+                          }
+                          className="text-xl cursor-pointer hover:text-soft-green"
+                        />
                       </div>
                     </div>
                   ))}

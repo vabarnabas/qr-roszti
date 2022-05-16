@@ -1,4 +1,3 @@
-import { signInWithEmailAndPassword } from "firebase/auth"
 import { useRouter } from "next/router"
 import React, { SyntheticEvent, useEffect, useState } from "react"
 import { BsFillEnvelopeFill } from "react-icons/bs"
@@ -60,13 +59,10 @@ const LoginView = () => {
     // }
   }
 
-  // console.log(userStorage)
-
   useEffect(() => {
     if (data && data.users.length > 0 && !fetching) {
       const authenticateUser = async () => {
         const match = await comparePassword(password, data?.users[0].password)
-        console.log(match)
         if (match.message === "Success.") {
           await getUserById({ requestPolicy: "network-only" })
         } else {
@@ -88,7 +84,7 @@ const LoginView = () => {
 
   return (
     <div className="select-none w-screen h-screen bg-white text-slate-500 flex justify-center border-inherit px-6 items-center">
-      {fetching ? (
+      {fetching || userFetching ? (
         <Spinner />
       ) : (
         <form onSubmit={(e) => onFromSubmit(e)} action="" className="w-72">

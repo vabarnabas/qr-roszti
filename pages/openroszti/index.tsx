@@ -25,7 +25,9 @@ const OpenROszTI = () => {
     "roszti-data",
     async () => {
       const res = await fetch(
-        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/${queryCode}?range=2021-2022%20tavasz%20events`,
+        `https://us-central1-open-roszti.cloudfunctions.net/app/users/data/${
+          Array.isArray(code) ? code[0] : code
+        }?range=2021-2022%20tavasz%20events`,
         {
           headers: {
             "Access-Control-Allow-Origin": "*",
@@ -69,7 +71,7 @@ const OpenROszTI = () => {
           {!ROszTIData && <OpenROszTIForm />}
           {ROszTIData && !ROszTIData?.message && (
             <div className="w-full grid lg:grid-cols-2 mb-3 gap-x-4 gap-y-2">
-              <div className="grid w-full grid-flow-col gap-x-6 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
+              <div className="grid w-full grid-flow-col gap-x-6 items-center justify-between bg-slate-50 py-1 px-4 rounded-md">
                 <div className="flex items-center justify-center flex-col">
                   <p className="font-bold">
                     {ROszTIData[ROszTIData.length - 2]?.point}
@@ -94,7 +96,7 @@ const OpenROszTI = () => {
                   </p>
                 )}
               </div>
-              <div className="grid w-full grid-flow-col gap-x-6 items-center justify-center bg-slate-50 py-1 px-4 rounded-md">
+              <div className="grid w-full grid-flow-col gap-x-6 items-center justify-between bg-slate-50 py-1 px-4 rounded-md">
                 <div className="flex items-center justify-center flex-col">
                   <p className="font-bold">
                     {ROszTIData[ROszTIData.length - 1]?.point}

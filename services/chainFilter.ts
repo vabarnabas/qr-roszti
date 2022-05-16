@@ -68,6 +68,18 @@ export const chainFilter = (input: any[]) => {
       }
       return chainObject
     },
+    filterBoolean(boolean: boolean, active: boolean, key: string) {
+      if (active && filteredArray.length !== 0) {
+        isGrouped
+          ? subsetArray.push(
+              filteredArray.filter((object) => object[key] === boolean)
+            )
+          : (filteredArray = filteredArray.filter(
+              (object) => object[key] === boolean
+            ))
+      }
+      return chainObject
+    },
     filterDateInterval(
       startDate: Date,
       endDate: Date,

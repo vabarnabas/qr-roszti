@@ -52,21 +52,18 @@ const CommandPalette: React.FC = () => {
         >
           {menuOptions.filter(
             (object) =>
-              object.title.toLowerCase().includes(query.toLocaleLowerCase()) ||
-              object.group
-                .toLocaleLowerCase()
-                .includes(query.toLocaleLowerCase())
+              (object.title.toLowerCase().includes(query.toLowerCase()) ||
+                object.group.toLowerCase().includes(query.toLowerCase())) &&
+              object.group !== "Main" &&
+              (object?.visible !== undefined ? object.visible : true)
           ).length > 0 ? (
             menuOptions
               .filter(
                 (object) =>
-                  (object.title
-                    .toLowerCase()
-                    .includes(query.toLocaleLowerCase()) ||
-                    object.group
-                      .toLocaleLowerCase()
-                      .includes(query.toLocaleLowerCase())) &&
-                  object.group !== "Main"
+                  (object.title.toLowerCase().includes(query.toLowerCase()) ||
+                    object.group.toLowerCase().includes(query.toLowerCase())) &&
+                  object.group !== "Main" &&
+                  (object?.visible !== undefined ? object.visible : true)
               )
               .map((option) => (
                 <Combobox.Option

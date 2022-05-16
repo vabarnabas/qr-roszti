@@ -4,6 +4,7 @@ import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
 import { useUser } from "../../providers/firebase-provider"
 import { useUserStorage } from "../../providers/user.provider"
+import { chainFilter } from "../../services/chainFilter"
 import CommandPalette from "../command-palette/command-palette"
 
 const Navbar = () => {

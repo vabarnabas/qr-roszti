@@ -35,7 +35,7 @@ const NewUser = () => {
     await createUser({
       id: uuidv4(),
       displayname: formData.displayName,
-      email: formData.email,
+      email: formData.email.toLocaleLowerCase(),
       code: formData.code,
       role: formData.role,
       password,

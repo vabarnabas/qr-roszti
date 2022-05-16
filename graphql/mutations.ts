@@ -3,7 +3,7 @@ import { gql } from "urql"
 export const mutateNewUser = gql`
   mutation mutateNewUser(
     $id: uuid!
-    $googleid: String!
+    $googleid: String = ""
     $displayname: String!
     $email: String!
     $role: String!
@@ -38,6 +38,33 @@ export const mutateDeleteEvent = gql`
   mutation mutateDeleteEvent($id: uuid!) {
     delete_events_by_pk(id: $id) {
       id
+    }
+  }
+`
+
+export const mutateUpdateUser = gql`
+  mutation mutateUpdateUser(
+    $id: uuid!
+    $email: String!
+    $displayname: String!
+  ) {
+    update_users_by_pk(
+      pk_columns: { id: $id }
+      _set: { email: $email, displayname: $displayname }
+    ) {
+      displayname
+      email
+      password
+    }
+  }
+`
+
+export const mutateUpdateUserPassword = gql`
+  mutation mutateUpdateUserPassword($id: uuid!, $password: String!) {
+    update_users_by_pk(pk_columns: { id: $id }, _set: { password: $password }) {
+      displayname
+      email
+      password
     }
   }
 `

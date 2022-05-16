@@ -7,6 +7,8 @@ import React, {
   useReducer,
   useState,
 } from "react"
+import { useQuery } from "urql"
+import { queryUserById } from "../graphql/queries"
 
 type Action =
   | { type: "create_user"; user: User }
@@ -42,6 +44,10 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   const router = useRouter()
   const [fetching, setFetching] = useState(true)
   const [state, dispatch] = useReducer(reducer, {})
+  const [{ data: userData, fetching: userFetching }, getUserById] = useQuery({
+    query: queryUserById,
+    variables: { id: state.id },
+  })
 
   const actions = useMemo(
     () => ({
@@ -76,6 +82,30 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
       localStorage.setItem("userStorage", JSON.stringify(state))
     }
   }, [state])
+
+  useEffect(() => {
+    if (userData) {
+      actions.setStorage({
+        ...state,
+        code:
+          state.code === userData.users_by_pk.code
+            ? state.code
+            : userData.users_by_pk.code,
+        displayname:
+          state.displayname === userData.users_by_pk.displayname
+            ? state.displayname
+            : userData.users_by_pk.displayname,
+        email:
+          state.email === userData.users_by_pk.email
+            ? state.email
+            : userData.users_by_pk.email,
+        role:
+          state.role === userData.users_by_pk.role
+            ? state.role
+            : userData.users_by_pk.role,
+      })
+    }
+  }, [userData])
 
   useEffect(() => {
     if (

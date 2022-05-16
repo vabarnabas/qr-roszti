@@ -6,7 +6,7 @@ export const queryUsers = gql`
       nodes {
         id
         role
-        googleid
+        code
         email
         displayname
         createdat
