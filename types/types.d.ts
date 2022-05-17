@@ -72,4 +72,6 @@ interface Event {
    * The date of the Event's creation.
    */
   createdat: Date
+
+  user?: User
 }

@@ -24,6 +24,34 @@ export const mutateNewUser = gql`
   }
 `
 
+export const mutateNewEvent = gql`
+  mutation MyMutation(
+    $createdby: uuid!
+    $deadline: timestamp!
+    $description: String!
+    $displayname: String!
+    $eventdate: timestamp!
+    $eventlocation: String!
+    $eventtype: String!
+    $id: uuid!
+  ) {
+    insert_events_one(
+      object: {
+        createdby: $createdby
+        deadline: $deadline
+        description: $description
+        displayname: $displayname
+        eventdate: $eventdate
+        eventlocation: $eventlocation
+        eventtype: $eventtype
+        id: $id
+      }
+    ) {
+      id
+    }
+  }
+`
+
 export const mutateDeleteUser = gql`
   mutation mutateDeleteUser($id: uuid!) {
     delete_users_by_pk(id: $id) {

@@ -6,23 +6,42 @@ import { IoGrid } from "react-icons/io5"
 import { MdOutlineAlternateEmail } from "react-icons/md"
 import { useMutation } from "urql"
 import Layout from "../../../../components/layout"
-import { mutateNewUser } from "../../../../graphql/mutations"
+import { mutateNewEvent, mutateNewUser } from "../../../../graphql/mutations"
 import { auth, useUser } from "../../../../providers/firebase-provider"
 import { v4 as uuidv4 } from "uuid"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { useUserStorage } from "../../../../providers/user.provider"
+import { formatDate } from "../../../../services/formatDate"
 
-interface UserData {
+interface EventData {
   displayName: string
-  email: string
-  code: string
-  role: string
+  description: string
+  eventLocation: string
+  type: EventType
+  deadline: Date
+  eventDate: number
 }
 
 const NewEvent = () => {
   const router = useRouter()
-  const user = useUser()
-  const [formData, setFormData] = useState<UserData>({} as UserData)
-  const [, createUser] = useMutation(mutateNewUser)
+  const { userStorage } = useUserStorage()
+  const [formData, setFormData] = useState<EventData>({} as EventData)
+  const [, createEvent] = useMutation(mutateNewEvent)
+
+  const types: { name: string; type: EventType }[] = [
+    {
+      name: "Local",
+      type: "LOCAL",
+    },
+    {
+      name: "Central",
+      type: "CENTRAL",
+    },
+    {
+      name: "Open Call",
+      type: "OPENCALL",
+    },
+  ]
 
   const handleChange = (e: any) => {
     const { name, value } = e.target
@@ -31,21 +50,19 @@ const NewEvent = () => {
 
   const onFormSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
-    const newUser = await createUserWithEmailAndPassword(
-      auth,
-      formData.email,
-      "ESTIEM2022"
-    )
-    await updateProfile(newUser.user, { displayName: formData.displayName })
-    await createUser({
-      id: uuidv4(),
-      googleid: newUser.user.uid,
-      displayname: formData.displayName,
-      email: formData.email,
-      code: formData.code,
-      role: formData.role,
-    })
-    await router.push("/users")
+    if (formData.type !== undefined) {
+      await createEvent({
+        id: uuidv4(),
+        createdby: userStorage.id,
+        displayname: formData.displayName,
+        description: formData.description,
+        eventlocation: formData.eventLocation,
+        eventdate: formatDate(formData.eventDate),
+        deadline: formatDate(formData.eventDate),
+        eventtype: formData.type,
+      })
+    }
+    await router.push("/events/management")
   }
 
   return (
@@ -56,8 +73,8 @@ const NewEvent = () => {
           action=""
           className="w-full bg-white rounded-md"
         >
-          <p className="text-xl font-bold mb-6">New User</p>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <p className="text-xl font-bold mb-6">New Event</p>
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4">
             <div className="relative flex items-center">
               <CgRename className="absolute left-2" />
               <input
@@ -72,18 +89,17 @@ const NewEvent = () => {
                 className="form-input-field"
               />
             </div>
-            <div className="relative flex items-center">
+            <div className="relative flex items-center ">
               <MdOutlineAlternateEmail className="absolute left-2" />
-              <input
+              <textarea
                 required
-                type="email"
-                name="email"
-                value={formData.email}
+                name="description"
+                value={formData.description}
                 onChange={(e) => {
                   handleChange(e)
                 }}
-                placeholder="E-mail Address"
-                className="form-input-field"
+                placeholder="Description"
+                className="form-input-field resize-none"
               />
             </div>
             <div className="relative flex items-center">
@@ -91,28 +107,51 @@ const NewEvent = () => {
               <input
                 required
                 type="text"
-                name="code"
-                value={formData.code}
+                name="eventLocation"
+                value={formData.eventLocation}
                 onChange={(e) => {
                   handleChange(e)
                 }}
-                placeholder="RÖszTI Code"
+                placeholder="Event Location"
                 className="form-input-field"
               />
             </div>
-            <div className="relative flex items-center">
-              <FaUserFriends className="absolute left-2" />
-              <input
-                required
-                type="text"
-                name="role"
-                value={formData.role}
-                onChange={(e) => {
-                  handleChange(e)
-                }}
-                placeholder="Role"
-                className="form-input-field"
-              />
+            <div className="">
+              <p className="mb-1 text-xs">Type</p>
+              <div className="flex w-full cursor-pointer flex-col justify-between divide-y overflow-hidden rounded-md bg-gray-50 text-sm">
+                {types.map((item) => (
+                  <p
+                    key={item.name}
+                    onClick={() =>
+                      setFormData({ ...formData, type: item.type })
+                    }
+                    className={`flex w-full items-center justify-center py-1 ${
+                      formData.type === item.type
+                        ? "bg-soft-green text-white"
+                        : "bg-gray-50"
+                    }`}
+                  >
+                    {item.name}
+                  </p>
+                ))}
+              </div>
+            </div>
+            <div className="">
+              <p className="mb-1 text-xs">Event Date</p>
+              <div className="relative flex items-center">
+                <IoGrid className="absolute left-2" />
+                <input
+                  required
+                  type="date"
+                  name="eventDate"
+                  value={formData.eventDate}
+                  onChange={(e) => {
+                    handleChange(e)
+                  }}
+                  placeholder="Event Date"
+                  className="form-input-field"
+                />
+              </div>
             </div>
           </div>
           <button className="bg-soft-green hover:bg-darker-soft-green py-1 px-4 rounded-md text-slate-50 w-full text-sm mt-3">

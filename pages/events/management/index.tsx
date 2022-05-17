@@ -38,7 +38,7 @@ const Events = () => {
             />
           </div>
           <button
-            onClick={() => router.push("/users/new")}
+            onClick={() => router.push("/events/management/new")}
             className="bg-soft-green hover:bg-darker-soft-green flex items-center justify-center text-white py-1 rounded-md text-sm px-8"
           >
             New
@@ -50,7 +50,7 @@ const Events = () => {
               <Spinner />
             </div>
           ) : (
-            <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-3">
+            <div className="w-full h-min gap-x-4 gap-y-2 grid grid-cols-1 lg:grid-cols-1">
               {data?.events_aggregate?.nodes &&
                 data.events_aggregate.nodes
                   .filter((object: Event) =>
@@ -67,7 +67,11 @@ const Events = () => {
                         <p className="font-semibold text-lg">
                           {item.displayname}
                         </p>
-                        <p className="text-xs">{item.description}</p>
+                        <p className="text-xs -mt-0.5 text-soft-green">{`Created by ${item.user?.displayname}.`}</p>
+                        <p className="text-sm mt-2">{item.description}</p>
+                        <p className="text-xs mt-2 font-semibold">
+                          {new Date(item.eventdate).toLocaleString("hu-HU")}
+                        </p>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <MdDelete
