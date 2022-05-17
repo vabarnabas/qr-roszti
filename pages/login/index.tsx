@@ -11,11 +11,12 @@ import { comparePassword } from "../../services/api-handlers"
 
 const LoginView = () => {
   const router = useRouter()
-  const { createUser, userStorage } = useUserStorage()
+  const { createUser } = useUserStorage()
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const [{ data, fetching }, getUserByEmail] = useQuery({
     query: queryUserByEmail,
@@ -31,32 +32,8 @@ const LoginView = () => {
 
   const onFromSubmit = async (e: SyntheticEvent) => {
     e.preventDefault()
+    setLoading(true)
     await getUserByEmail({ requestPolicy: "network-only" })
-    // try {
-    //   await signInWithEmailAndPassword(auth, email, password)
-    //   await router.push("/")
-    // } catch (error: any) {
-    //   switch (error.code) {
-    //     case "auth/invalid-email":
-    //       setError("Hibás vagy ismeretlen e-mail cím!")
-    //       break
-    //     case "auth/internal-error":
-    //       setError("Hibás vagy hiányzó adatok!")
-    //       break
-    //     case "auth/wrong-password":
-    //       setError("Hibás jelszó!")
-    //       break
-    //     case "auth/too-many-requests":
-    //       setError("Túl sok próbálkozás")
-    //       break
-    //     case "auth/user-not-found":
-    //       setError("Ismeretlen felhasználó!")
-    //       break
-    //     default:
-    //       setError("")
-    //       break
-    //   }
-    // }
   }
 
   useEffect(() => {
@@ -79,12 +56,14 @@ const LoginView = () => {
     if (userData && !userFetching) {
       createUser(userData.users_by_pk)
       router.push("/")
+    } else if (!userData && !userFetching) {
+      setLoading(false)
     }
   }, [userData, userFetching])
 
   return (
     <div className="select-none w-screen h-screen bg-white text-slate-500 flex justify-center border-inherit px-6 items-center">
-      {fetching || userFetching ? (
+      {fetching || userFetching || loading ? (
         <Spinner />
       ) : (
         <form onSubmit={(e) => onFromSubmit(e)} action="" className="w-72">

@@ -53,7 +53,6 @@ export const queryUserById = gql`
       createdat
       displayname
       email
-      googleid
       id
       password
       role

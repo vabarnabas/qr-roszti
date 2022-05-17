@@ -50,7 +50,7 @@ const OpenROszTI = () => {
     }
 
     fetchIfCode()
-  }, [router.isReady, router.query])
+  }, [router.isReady, router.query, queryCode])
 
   useEffect(() => {
     const reloadOnError = async () => {

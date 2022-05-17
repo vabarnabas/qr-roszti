@@ -47,6 +47,7 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   const [{ data: userData, fetching: userFetching }, getUserById] = useQuery({
     query: queryUserById,
     variables: { id: state.id },
+    // pause: true,
   })
 
   const actions = useMemo(
@@ -73,18 +74,28 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   )
 
   useEffect(() => {
-    actions.setStorage(JSON.parse(localStorage.getItem("userStorage") || "{}"))
+    actions.setStorage(JSON.parse(localStorage.getItem("rosztiUser") || "{}"))
     setFetching(false)
   }, [])
 
   useEffect(() => {
     if (!fetching) {
-      localStorage.setItem("userStorage", JSON.stringify(state))
+      localStorage.setItem("rosztiUser", JSON.stringify(state))
     }
   }, [state])
 
+  // useEffect(() => {
+  //   const reFetch = async () => {
+  //     await getUserById({ requestPolicy: "network-only" })
+  //   }
+  //   if (state.id) {
+  //     reFetch()
+  //   }
+  // }, [state])
+
   useEffect(() => {
     if (userData) {
+      console.log("go")
       actions.setStorage({
         ...state,
         code:
@@ -107,6 +118,9 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
     }
   }, [userData])
 
+  console.log(state)
+  console.log(userData)
+
   useEffect(() => {
     if (
       !fetching &&
@@ -115,7 +129,7 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
     ) {
       router.push("/login")
     }
-  }, [router.pathname])
+  }, [router.pathname, state])
 
   return (
     <UserStorageContext.Provider value={{ userStorage: state, ...actions }}>

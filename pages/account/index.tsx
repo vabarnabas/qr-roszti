@@ -39,7 +39,7 @@ const Account = () => {
   useEffect(() => {
     setFormData({
       displayName: userStorage?.displayname,
-      email: userStorage?.email.toLowerCase(),
+      email: userStorage?.email?.toLowerCase(),
       password: "",
       confirmPassword: "",
     })
@@ -104,7 +104,8 @@ const Account = () => {
                     onChange={(e) => handleChange(e)}
                     type="text"
                     placeholder="E-mail Address"
-                    className="form-input-field"
+                    className="form-input-field text-slate-400"
+                    disabled
                   />
                 </div>
                 <button className="bg-soft-green hover:bg-darker-soft-green py-1 px-4 rounded-md text-slate-50 w-full text-sm">
