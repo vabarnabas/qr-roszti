@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import { useState } from "react"
+import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import { HiChevronDown, HiChevronUp, HiTerminal } from "react-icons/hi"
 import { useMenuOptions } from "../../data/useMenuOptions"
 import { useUser } from "../../providers/firebase-provider"
@@ -15,7 +16,7 @@ const Navbar = () => {
   const getInitials = (name: string) => {
     const fullName = name.split(" ")
     if (name === "") {
-      return "PH"
+      return <AiOutlineLoading3Quarters className="animate-spin text-white" />
     }
     if (fullName.length === 1) {
       return `${fullName?.[0]?.charAt(0)}`
@@ -53,9 +54,7 @@ const Navbar = () => {
         </div>
         <div className="ml-4 flex flex-col items-stretch">
           <p className="text-sm font-bold text-soft-green">RÖszTI Suite</p>
-          <p className="text-xs">
-            {userStorage?.displayname || "Place Holder"}
-          </p>
+          <p className="text-xs">{userStorage?.displayname || "Loading..."}</p>
         </div>
         {openGroups.includes("Profile") ? (
           <HiChevronUp className="ml-auto text-3xl" />

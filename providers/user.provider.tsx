@@ -46,7 +46,7 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, {})
   const [{ data: userData, fetching: userFetching }, getUserById] = useQuery({
     query: queryUserById,
-    variables: { id: state.id },
+    variables: { id: state?.id },
     // pause: true,
   })
 
@@ -57,11 +57,13 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
           type: "create_user",
           user: user,
         })
+        localStorage.setItem("rosztiUserId", user.id)
       },
       removeUser: () => {
         dispatch({
           type: "remove_user",
         })
+        localStorage.removeItem("rosztiUserId")
       },
       setStorage: (storage: User) => {
         dispatch({
@@ -74,13 +76,16 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   )
 
   useEffect(() => {
-    actions.setStorage(JSON.parse(localStorage.getItem("rosztiUser") || "{}"))
+    actions.setStorage({
+      ...state,
+      id: localStorage.getItem("rosztiUserId"),
+    })
     setFetching(false)
   }, [])
 
   useEffect(() => {
     if (!fetching) {
-      localStorage.setItem("rosztiUser", JSON.stringify(state))
+      localStorage.setItem("rosztiUserId", state.id)
     }
   }, [state])
 
@@ -94,39 +99,24 @@ export const UserStorageProvider: React.FC<Props> = ({ children }) => {
   // }, [state])
 
   useEffect(() => {
-    if (userData) {
-      console.log("go")
+    if (userData && userData.users_by_pk) {
       actions.setStorage({
         ...state,
-        code:
-          state.code === userData.users_by_pk.code
-            ? state.code
-            : userData.users_by_pk.code,
-        displayname:
-          state.displayname === userData.users_by_pk.displayname
-            ? state.displayname
-            : userData.users_by_pk.displayname,
-        email:
-          state.email === userData.users_by_pk.email
-            ? state.email
-            : userData.users_by_pk.email,
-        role:
-          state.role === userData.users_by_pk.role
-            ? state.role
-            : userData.users_by_pk.role,
+        code: userData.users_by_pk.code,
+        displayname: userData.users_by_pk.displayname,
+        email: userData.users_by_pk.email,
+        role: userData.users_by_pk.role,
       })
     }
   }, [userData])
 
-  console.log(state)
-  console.log(userData)
-
   useEffect(() => {
     if (
       !fetching &&
-      Object.keys(state).length === 0 &&
-      router.pathname !== "/login"
+      router.pathname !== "/login" &&
+      (userData?.users_by_pk === null || state.id === "null")
     ) {
+      localStorage.removeItem("rosztiUserId")
       router.push("/login")
     }
   }, [router.pathname, state])
